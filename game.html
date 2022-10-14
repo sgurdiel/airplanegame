@@ -1,0 +1,293 @@
+<HTML>
+<HEAD>
+<SCRIPT LANGUAGE="JavaScript">
+var pausa=false;
+var impactoshawk=0;
+var tomahawk=0;
+var golpeado=false;
+var fin=false;
+var numGolpes=0;
+var numMis=10;
+var numMisD=1;
+var numMisR=1;
+var numD=15;
+var numDdos=0;
+var recargas=10;
+var posy;
+var posx;
+var puntos = 0;
+var V = new Array();
+var M = new Array();
+var rmisil=0;
+
+function inicio(){
+var i;
+var posicion;
+var alto; 
+
+	document.onmousedown=mouseDown;
+	document.onmousemove=mouseMove;
+	bloc=document.all["l1"].style;
+	posy=document.body.clientHeight/2;
+	posx=document.body.clientWidth-65;
+	bloc.left=posx;
+	bloc.top=posy;
+	alto = document.body.clientHeight-40;
+	puntos=0;
+	parent.frames['menu'].document.all['txtpuntos'].value=puntos;
+	for (i=1;i<=numD;i++) {
+		crearLayer('lay'+i,posy,-40,10,10);
+		V[i]='lay'+i;
+	}
+	for (i=1;i<=numMis;i++) {
+		crearMisiles('mis'+i,-100,-100,40,40);
+		M[i]='mis'+i;
+		document.all[M[i]].style.visibility="visible";
+		posicion =(Math.round(Math.random()*(alto-alto*0.18)))+alto*0.18;
+		document.all[M[i]].style.top=posicion;
+	}
+	dinamiza();
+}
+
+function mouseMove() {
+	bloc.top = event.y-27;
+}
+
+function mouseDown(){
+	dispara();
+}
+
+function crearMisiles(nom,dalt,esquerra,ample,alt){
+var cadena;
+	
+	cadena="<DIV ID="+nom+" STYLE='position:absolute;"; cadena=cadena+"top:"+dalt+";left:"+esquerra+";height:40px;width:90px;"; 
+	cadena=cadena+"clip:rect(5px 90px 35px 1px);";
+	cadena=cadena+"background-color:blue;background-image:URL(Imagenes/misil-1.bmp)'></DIV>";
+	document.body.insertAdjacentHTML("BeforeEnd",cadena);
+}
+
+function incrementa_puntos(tipo) {
+	if (tipo==1) {
+		puntos=puntos+100;
+	} else {
+		puntos=puntos+1000;
+	}
+	parent.frames['menu'].document.all['txtpuntos'].value=puntos;
+}
+
+function crearLayer(nom,dalt,esquerra,ample,alt)
+{
+	var cadena;
+	
+	cadena="<DIV ID="+nom+" STYLE='position:absolute;"; cadena=cadena+"top:"+dalt+";left:"+esquerra+";height:30px;width:30px;"; 
+	cadena=cadena+"clip:rect(1px 40px 4px 1px);";
+	cadena=cadena+"background-color:blue'></DIV>";
+	document.body.insertAdjacentHTML("BeforeEnd",cadena);
+}
+
+function dinamiza() {
+var c;
+var posicion;
+var alto = document.body.clientHeight-40;	
+
+	//mouseMove();
+	moverLayer();
+	rmisil=rmisil+1;
+	if (rmisil>=11) {
+		if (numMisD<=10) {
+			numMisD=numMisD+1;
+		}
+		rmisil=0;
+	}
+	if (numMisR>10) {
+		for (c=1;c<=numMisR-1;c++) {
+			document.all[M[c]].style.visibility="visible";
+			posicion =(Math.round(Math.random()*(alto-alto*0.18)))+alto*0.18;
+			document.all[M[c]].style.top=posicion;
+		}		
+		numMisD=1;
+		numMisR=1;
+	}
+	moverMisil();
+	if (!fin) {
+		if (golpeado) {
+			pausa=true;
+			setTimeout('quitaAlerta()',4000);
+			golpeado=false;
+		}else if (tomahawk==15) {
+			pausa=true;
+			parent.frames['menu'].document.all['imgradar'].src="Imagenes/radaron.gif";
+			parent.frames['menu'].document.all['msgalerta'].src="Imagenes/alerta.bmp";
+			setTimeout('lanzarTomahawk()',4000);
+			tomahawk=0;
+		}else{
+			setTimeout('dinamiza()',100);
+		}
+	}else {
+		parent.frames['game'].location.href = "end.html";
+	}
+}
+
+function lanzarTomahawk() {
+var alto = document.body.clientHeight-40;
+
+	parent.frames['menu'].document.all['imgradar'].src="Imagenes/radaroff.bmp";
+	parent.frames['menu'].document.all['msgalerta'].src="Imagenes/sinalerta.bmp";
+	document.all['ltomahawk'].style.top=(Math.round(Math.random()*(alto-alto*0.18)))+alto*0.18;
+	document.all['ltomahawk'].style.left=-200;
+	document.all['ltomahawk'].style.visibility="visible";
+	pausa=false;
+	dinamiza();
+}
+
+function impacto_torres() {
+	numGolpes=numGolpes+1;
+	if (numGolpes==1) {
+		golpeado=true;
+		parent.frames['menu'].document.all['imgtorre'].src="Imagenes/M17466.jpg";
+		parent.frames['menu'].document.all['msgdamage'].src="Imagenes/img1.bmp";
+	}else if (numGolpes==2) {
+		golpeado=true;
+		parent.frames['menu'].document.all['imgtorre'].src="Imagenes/M17467.jpg";
+		parent.frames['menu'].document.all['msgdamage'].src="Imagenes/img2.bmp";
+	}else if (numGolpes==3) {
+		golpeado=true;
+		parent.frames['menu'].document.all['imgtorre'].src="Imagenes/M17491.jpg";
+		parent.frames['menu'].document.all['msgdamage'].src="Imagenes/img3.bmp";
+	}else if (numGolpes==4) {
+		golpeado=true;
+		parent.frames['menu'].document.all['imgtorre'].src="Imagenes/M17491.jpg";
+		parent.frames['menu'].document.all['msgdamage'].src="Imagenes/img4.bmp";
+		fin = true;
+	}
+}
+
+function quitaAlerta() {
+	parent.frames['menu'].document.all['imgtorre'].src="Imagenes/sintorre.bmp";
+	parent.frames['menu'].document.all['msgdamage'].src="Imagenes/sintorre.bmp";
+	pausa=false;
+	dinamiza();
+}
+
+function moverMisil() {
+var c;
+
+	for (c=numMisR;c<=numMisD-1;c++)
+	{
+		if (parseInt(document.all[M[c]].style.left) < document.body.clientWidth+65) {
+			document.all[M[c]].style.left=parseInt(document.all[M[c]].style.left)+50;
+		}else {
+			numMisR=numMisR+1;
+			tomahawk=tomahawk+1;
+			document.all[M[c]].style.left=-100;
+			if (document.all[M[c]].style.visibility=="visible") {
+				impacto_torres();
+			}
+		}
+	}
+	if (document.all['ltomahawk'].style.visibility=="visible") {
+		if (parseInt(document.all['ltomahawk'].style.left) <= document.body.clientWidth+200) {
+			document.all['ltomahawk'].style.left=parseInt(document.all['ltomahawk'].style.left)+15;
+		}else {
+			document.all['ltomahawk'].style.left=-200;
+			document.all['ltomahawk'].style.visibility="hidden";
+			impacto_torres();
+		}
+	}
+}
+
+function compruebaImpacto(layer) {
+var c;
+
+	for (c=1;c<=numMisD-1;c++) {
+		if (parseInt(document.all[layer].style.left) < parseInt(document.all[M[c]].style.left)+80) {
+			if (parseInt(document.all[layer].style.left) >= parseInt(document.all[M[c]].style.left)-40) {
+				if (parseInt(document.all[layer].style.top) >= parseInt(document.all[M[c]].style.top)) {
+					if (parseInt(document.all[layer].style.top) < parseInt(document.all[M[c]].style.top)+31) {
+						document.all[layer].style.left=-200;
+						document.all[M[c]].style.top=-100;
+						document.all[M[c]].style.visibility="hidden";
+						incrementa_puntos(1);
+					}
+				}
+			}
+		}
+	}
+	for (c=1;c<=numMisD-1;c++) {
+		if (parseInt(document.all[layer].style.left) < parseInt(document.all['ltomahawk'].style.left)+200) {
+			if (parseInt(document.all[layer].style.left) >= parseInt(document.all['ltomahawk'].style.left)-40) {
+				if (parseInt(document.all[layer].style.top) >= parseInt(document.all['ltomahawk'].style.top)-20) {
+					if (parseInt(document.all[layer].style.top) < parseInt(document.all['ltomahawk'].style.top)+60) {
+						impactoshawk=impactoshawk+1;
+						document.all[layer].style.left=-200;
+						if (impactoshawk==4) {
+							document.all['ltomahawk'].style.top=-100;
+							document.all['ltomahawk'].style.left=document.body.clientWidth+210;
+							document.all['ltomahawk'].style.visibility="hidden";
+							incrementa_puntos(2);
+							impactoshawk=0;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+function moverLayer(){
+	var c;
+	var cual;
+
+	for (c=1;c<=numD;c++){
+		if (parseInt(document.all[V[c]].style.left)>-40) { 
+			document.all[V[c]].style.left=parseInt(document.all[V[c]].style.left)-70;
+			compruebaImpacto(V[c]);
+		}
+	}
+	if (numDdos==numD) {
+		if (parseInt(document.all[V[numD]].style.left)<=-40) {
+			for (c=numD;c>=1;c--)	{
+				cual='l'+c;
+				parent.frames['menu'].document.all[cual].style.visibility="hidden";
+			}
+		}
+	}
+}
+
+function dispara(){
+	var c;
+	var cual;
+	
+			if (numDdos<=numD) {
+				if (numDdos<numD) {
+					if (pausa==false) {
+						numDdos++;
+						cual='l'+numDdos;
+						document.all[V[numDdos]].style.left=document.body.clientWidth-30;
+						document.all[V[numDdos]].style.top=parseInt(bloc.top)+27;
+						parent.frames['menu'].document.all[cual].style.visibility="visible";
+					}
+				}
+				recargas=0;
+				for (c=1;c<=numDdos;c++) {
+					if (parseInt(document.all[V[c]].style.left)<0) {
+						recargas++;
+					}
+				}
+				if (recargas==numD) {
+					numDdos=0;
+					dispara();
+				}
+			}
+}
+
+</SCRIPT>
+</HEAD>
+
+<BODY ONLOAD="inicio()" BGCOLOR="black">
+<DIV ID="l1" STYLE="top:150px;left:100px;width:65px;height:58px;
+	background-color:black;position:absolute;z-index:1;background-image:URL(Imagenes/f14-2.bmp)"></DIV>
+<DIV ID="ltomahawk" STYLE="top:100;left:-200px;width:180px;height:40px;background-color:black;
+	position:absolute;background-image:URL(Imagenes/misil.bmp);visibility:visible"></DIV>
+</BODY>
+</HTML>
