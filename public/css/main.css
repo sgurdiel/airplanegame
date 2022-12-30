@@ -1,0 +1,218 @@
+* {
+    user-select: none;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 16px;
+    min-width: 800px;
+    min-height: 600px;
+    height: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: stretch;
+}
+
+div#menu {
+    height: 76px;
+    padding: 0;
+    margin: 0;
+    box-sizing: content-box;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    color: red;
+    text-align: center;
+    align-items: center;
+    background-image: url(/img/menuBg.png);
+    border-bottom: 4px outset #12d912;
+}
+
+div#menu div#menuScore {
+    margin-left: 20px;
+    background-color: black;
+    padding: 6px;
+    color: #12d912;
+    border-radius: 20px;
+    border: 4px outset #12d912;
+    height: 22px;
+    min-width: 220px;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+}
+
+div#menu div#menuRounds {
+    background-color: black;
+    padding: 6px;
+    color: #9b5811;
+    border: 4px outset #9b5811;
+    width: 150px;
+    height: 22px;
+}
+
+div#menu div#menuRounds span#magazineMsg {
+    display: none;
+}
+
+div#menu div#menuRounds span#reloadingMsg {
+    animation: blinker 0.3s linear infinite;
+    display: none;
+}
+
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
+}
+
+div#menu div#menuRadar {
+    margin-right: 20px;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 20px;
+    border: 4px outset #12d912;
+    width: 300px;
+    height: 52px;
+    background: black;
+    padding: 2px;
+}
+
+div#menu div#menuRadar div#radarMsg {
+    color: #bd1111;
+}
+
+div#menu div#menuRadar div#radarImg img {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    display: block;
+    max-height: 54px;
+    border-radius: 14px;
+}
+
+div#body {
+    flex: auto;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+}
+
+div#body div.sides {
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    z-index: 99;
+}
+
+div#body div#game {
+    z-index: 0;
+    display: block;
+    width: 1024px;
+    min-width: 1024px;
+    height: 658px;
+    background-color: #020511;
+}
+
+div#body div#game div#airplane {
+    position: absolute;
+    z-index:3;
+    width:92px;
+    height:58px;
+    background-image: url(/img/airplane.png);
+}
+
+div#body div#game div.airplaneFireRound {
+    position: absolute;
+    z-index: 1;
+    height: 10px;
+    width: 48px;
+    background-image: url(/img/missile3.png);
+}
+
+div#body div#game div.missileHydrogen {
+    position: absolute;
+    z-index:1;
+    height: 40px;
+    width: 122px;
+    background-image: url(/img/missile1.png);
+}
+
+div#body div#game div.missileAtomic {
+    position: absolute;
+    z-index:1;
+    height: 40px;
+    width: 80px;
+    background-image: url(/img/missile2.png);
+}
+
+div#body div#game img.explosion {
+    position: absolute;
+    z-index:2;
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
+div#footer {
+    height: 12px;
+    border-top: 4px inset #12d912;
+    background-color:black;
+}
+
+div#footer div#version {
+    font-size: 8px;
+    text-align: center;
+    color: white;
+}
+
+div#infoOverlay {
+    z-index: 998;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.6);
+    visibility: hidden;
+}
+
+div#infoOverlay div.infoContainer {
+    z-index: 999;
+    position: absolute;
+    height: 600px;
+    width: 600px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: black;
+    border-radius: 40px;
+}
+
+div#infoOverlay div.infoContainer div {
+    visibility: hidden;
+    width: 100%;
+    height: 100%;
+    color: red;
+    font-size: 32px;
+}
+
+div#infoOverlay div.infoContainer p {
+    position: absolute;
+    margin: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
