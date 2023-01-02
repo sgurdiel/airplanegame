@@ -31,13 +31,12 @@
         <div id="game"></div>
         <div class="sides"></div>
     </div>
-    <div id="footer"><div id="version">(APP_RELEASE)</div></div>
+    <div id="footer"><div id="version">(<%= htmlWebpackPlugin.options.APP_RELEASE %>)</div></div>
     <div id="infoOverlay">
         <div class="infoContainer">
             <div id="error"></div>
             <div id="gameend"><p>GAME OVER<br /><a href="javascript:void(0);" onclick="window.location.reload(true);">Play new game</a></p></div>
         </div>
     </div>
-    <script src="/js/app.js"></script>
 </body>
 </html>
