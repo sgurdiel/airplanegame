@@ -1,4 +1,4 @@
-import GameElement from "./GameElement"
+import type GameElement from './GameElement'
 
 export abstract class Missile {
     protected destructionScore: number = 0
@@ -7,7 +7,7 @@ export abstract class Missile {
     private radarDetected: boolean = false
     protected hitsTillDestruction: number = 1
 
-    constructor(private element: GameElement, private topPos: number) {
+    constructor(private readonly element: GameElement, private readonly topPos: number) {
         this.leftPos = -this.element.getImgL()
     }
 
@@ -17,15 +17,15 @@ export abstract class Missile {
 
     public move(): number {
         this.leftPos += this.speed
-        this.element.move({topPos: this.topPos, leftPos: this.leftPos})
+        this.element.move({ topPos: this.topPos, leftPos: this.leftPos })
         return this.leftPos
     }
 
     public getRadarDetected(): boolean {
         return this.radarDetected
     }
-    
-    public setRadarDetected() {
+
+    public setRadarDetected(): void {
         this.radarDetected = true
     }
 
@@ -45,7 +45,7 @@ export abstract class Missile {
     public getTopPos(): number {
         return this.topPos
     }
-    
+
     public getLeftPos(): number {
         return this.leftPos
     }

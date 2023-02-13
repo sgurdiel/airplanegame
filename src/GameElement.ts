@@ -1,6 +1,6 @@
-import DomUi from "./DomUi"
+import type DomUi from './DomUi'
 
-export type GameElementPosition = {
+export interface GameElementPosition {
     topPos: number
     leftPos: number
 }
@@ -10,30 +10,30 @@ export default class GameElement {
     private position: GameElementPosition = { topPos: 0, leftPos: 0 }
 
     constructor(
-        private ui: DomUi,
+        private readonly ui: DomUi,
         elementType: string,
         private readonly imgH: number,
         private readonly imgL: number,
         cssClassName: string,
         id?: string
     ) {
-        this.htmlElement = ui.createHtmlElement(elementType)
+        this.htmlElement = this.ui.createHtmlElement(elementType)
         if (id !== undefined) {
-            this.ui.htmlElementAttribute(this.htmlElement, "id", id)
+            this.ui.htmlElementAttribute(this.htmlElement, 'id', id)
         }
-        ui
-        .htmlElementAttribute(this.htmlElement, "class", cssClassName)
-        .htmlElementStyle(this.htmlElement, "height", this.imgH+"px")
-        .htmlElementStyle(this.htmlElement, "width", this.imgL+"px")
-        .htmlElementStyle(this.htmlElement, "top", "0px")
-        .htmlElementStyle(this.htmlElement, "left", "-"+this.imgL+"px")
+        this.ui
+        .htmlElementAttribute(this.htmlElement, 'class', cssClassName)
+        .htmlElementStyle(this.htmlElement, 'height', this.imgH.toString().concat('px'))
+        .htmlElementStyle(this.htmlElement, 'width', this.imgL.toString().concat('px'))
+        .htmlElementStyle(this.htmlElement, 'top', '0px')
+        .htmlElementStyle(this.htmlElement, 'left', '-'.concat(this.imgL.toString()).concat('px'))
     }
 
-    public getImgH(): number{
+    public getImgH(): number {
         return this.imgH
     }
 
-    public getImgL(): number{
+    public getImgL(): number {
         return this.imgL
     }
 

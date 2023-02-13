@@ -1,6 +1,7 @@
-import GameElement, { GameElementPosition } from "./GameElement"
-import { asyncDelay } from "./Helpers"
-import { radarMsg } from "./Radar"
+import { type GameElementPosition } from './GameElement'
+import type GameElement from './GameElement'
+import { asyncDelay } from './Helpers'
+import { type radarMsg } from './Radar'
 
 export default class DomUi {
     private screenHeight: number = 0
@@ -9,45 +10,45 @@ export default class DomUi {
     private maxVerticalPosition: number = 0
     private maxLeftPosGaimingContainer: number = 0
     private mouseTop: number = 0
-    private gameContainer: HTMLElement
-    private gameContainerWith: number = 1024
-    private gameContainerHeight: number = 658
-    private reloadingMsg: HTMLElement
-    private scoreElement: HTMLElement
-    private gameendContainer: HTMLElement
-    private magazineContainer: HTMLElement
-    private infoOverlay: HTMLElement
-    private errorContainer: HTMLElement
-    private radarScreen: HTMLElement
-    private radarMsg: HTMLElement
+    private readonly gameContainer: HTMLElement
+    private readonly gameContainerWith: number = 1024
+    private readonly gameContainerHeight: number = 658
+    private readonly reloadingMsg: HTMLElement
+    private readonly scoreElement: HTMLElement
+    private readonly gameendContainer: HTMLElement
+    private readonly magazineContainer: HTMLElement
+    private readonly infoOverlay: HTMLElement
+    private readonly errorContainer: HTMLElement
+    private readonly radarScreen: HTMLElement
+    private readonly radarMsg: HTMLElement
 
     constructor() {
-        let gamingElement = document.getElementById("game")
+        const gamingElement = document.getElementById('game')
         if (gamingElement == null) throw new Error("Fatal: Missing HTML Element with id 'game'")
         this.gameContainer = gamingElement
-        let reloadingElement = document.getElementById("reloadingMsg")
+        const reloadingElement = document.getElementById('reloadingMsg')
         if (reloadingElement == null) throw new Error("Fatal: Missing HTML Element with id 'reloadingMsg'")
         this.reloadingMsg = reloadingElement
-        let scoreElement = document.getElementById("score")
+        const scoreElement = document.getElementById('score')
         if (scoreElement == null) throw new Error("Fatal: Missing HTML Element with id 'score'")
         this.scoreElement = scoreElement
-        let gameendContainer = document.getElementById("gameend")
+        const gameendContainer = document.getElementById('gameend')
         if (gameendContainer == null) throw new Error("Fatal: Missing HTML Element with id 'gameend'")
         this.gameendContainer = gameendContainer
-        let magazineContainer = document.getElementById("magazineMsg")
+        const magazineContainer = document.getElementById('magazineMsg')
         if (magazineContainer == null) throw new Error("Fatal: Missing HTML Element with id 'magazineMsg'")
         this.magazineContainer = magazineContainer
-        let infoOverlay = document.getElementById("infoOverlay")
+        const infoOverlay = document.getElementById('infoOverlay')
         if (infoOverlay == null) throw new Error("Fatal: Missing HTML Element with id 'infoOverlay'")
         this.infoOverlay = infoOverlay
-        let errorContainer = document.getElementById("error")
+        const errorContainer = document.getElementById('error')
         if (errorContainer == null) throw new Error("Fatal: Missing HTML Element with id 'error'")
         this.errorContainer = errorContainer
-        let radarScreen = document.getElementById('radarImg')
-        if (radarScreen === null) throw new Error("Fatal: Missing HTML Element with id 'radarImg'");
+        const radarScreen = document.getElementById('radarImg')
+        if (radarScreen === null) throw new Error("Fatal: Missing HTML Element with id 'radarImg'")
         this.radarScreen = radarScreen
-        let radarMsg = document.getElementById('radarMsg')
-        if (radarMsg === null) throw new Error("Fatal: Missing HTML Element with id 'radarMsg'");
+        const radarMsg = document.getElementById('radarMsg')
+        if (radarMsg === null) throw new Error("Fatal: Missing HTML Element with id 'radarMsg'")
         this.radarMsg = radarMsg
         this.supportedScreenSize()
     }
@@ -59,7 +60,7 @@ export default class DomUi {
         this.maxLeftPosGaimingContainer = this.getGameContainer().getBoundingClientRect().left + this.gameContainerWith
         this.maxVerticalPosition = this.verticalPositionOffset + this.gameContainerHeight
         const supportedScreenSize = (this.screenHeight >= 768 && this.screenWidth >= 1024)
-        this.displayError(!supportedScreenSize, "Minimum screen resolution not meet (w:1024px h:768px")
+        this.displayError(!supportedScreenSize, 'Minimum screen resolution not meet (w:1024px h:768px')
         return supportedScreenSize
     }
 
@@ -93,22 +94,23 @@ export default class DomUi {
     }
 
     public randomTopPos(element: GameElement): number {
-        return Math.round(this.verticalPositionOffset + (Math.random()*(this.gameContainerHeight - element.getImgH())))
+        return Math.round(this.verticalPositionOffset + (Math.random() * (this.gameContainerHeight - element.getImgH())))
     }
 
     public displayReloadingMsg(time: number): void {
-        this.htmlElementStyle(this.reloadingMsg, "display", "block")
-        this.htmlElementStyle(this.magazineContainer, "display", "none")
+        this.htmlElementStyle(this.reloadingMsg, 'display', 'block')
+        this.htmlElementStyle(this.magazineContainer, 'display', 'none')
         asyncDelay(time).then(() => {
-            this.htmlElementStyle(this.reloadingMsg, "display", "none")
-            this.htmlElementStyle(this.magazineContainer, "display", "block")
-        })
+            this.htmlElementStyle(this.reloadingMsg, 'display', 'none')
+            this.htmlElementStyle(this.magazineContainer, 'display', 'block')
+        }).catch(() => {})
     }
 
     public displayMagazineMsg(available: number): void {
-        this.htmlElementStyle(this.reloadingMsg, "display", "none")
-        this.htmlElementStyle(this.magazineContainer, "display", "block")
-        this.magazineContainer.innerHTML = "Fire rounds: "+available
+        this.htmlElementStyle(this.reloadingMsg, 'display', 'none')
+        this.htmlElementStyle(this.magazineContainer, 'display', 'block')
+        const str1: string = 'Fire rounds: '
+        this.magazineContainer.innerHTML = str1.concat(available.toString())
     }
 
     public displayScore(score: number): void {
@@ -117,30 +119,29 @@ export default class DomUi {
 
     public displayGameEnd(): void {
         this.popupInfo(true)
-        this.htmlElementStyle(this.gameendContainer, "visibility", "visible")
+        this.htmlElementStyle(this.gameendContainer, 'visibility', 'visible')
     }
 
     public displayError(display: boolean, msg?: string): void {
         this.popupInfo(display)
-        this.htmlElementStyle(this.errorContainer, "visibility", (display ? "visible" : "hidden"))
-        if (msg !== undefined) 
-            this.errorContainer.innerHTML = '<p>'+msg+'</p>'
+        this.htmlElementStyle(this.errorContainer, 'visibility', (display ? 'visible' : 'hidden'))
+        if (msg !== undefined) { this.errorContainer.innerHTML = '<p>' + msg + '</p>' }
     }
 
     private popupInfo(display: boolean): void {
-        this.htmlElementStyle(this.infoOverlay, "visibility", (display ? "visible" : "hidden"))
+        this.htmlElementStyle(this.infoOverlay, 'visibility', (display ? 'visible' : 'hidden'))
     }
 
     public displayRadarMsg(msg: radarMsg): void {
         this.radarMsg.innerHTML = msg.msg
-        let radarImg = document.createElement('img')
+        const radarImg = document.createElement('img')
         radarImg.src = msg.image
         this.radarScreen.innerHTML = radarImg.outerHTML
     }
 
     public clearRadarMsg(): void {
-        this.radarMsg.innerHTML = ""
-        this.radarScreen.innerHTML = ""
+        this.radarMsg.innerHTML = ''
+        this.radarScreen.innerHTML = ''
     }
 
     public createHtmlElement(type: string): HTMLElement {
@@ -158,8 +159,8 @@ export default class DomUi {
     }
 
     public htmlElementMove(element: HTMLElement, topPos: number, leftPos: number): DomUi {
-        this.htmlElementStyle(element, "top", topPos+"px")
-        this.htmlElementStyle(element, "left", leftPos+"px")
+        this.htmlElementStyle(element, 'top', topPos.toString().concat('px'))
+        this.htmlElementStyle(element, 'left', leftPos.toString().concat('px'))
         return this
     }
 
@@ -179,7 +180,7 @@ export default class DomUi {
         return this.mouseTop
     }
 
-    public setMouseTop(value: number) {
+    public setMouseTop(value: number): void {
         this.mouseTop = value
     }
 

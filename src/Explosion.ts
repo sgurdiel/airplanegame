@@ -1,13 +1,13 @@
-import DomUi from "./DomUi"
-import GameElement from "./GameElement"
+import type DomUi from './DomUi'
+import GameElement from './GameElement'
 
 export default class Explosion {
-    private element: GameElement
+    private readonly element: GameElement
 
-    constructor(private ui: DomUi, topPos: number, leftPos: number) {
-        this.element = new GameElement(this.ui, "img", 80, 80, "explosion")
-        this.element.move({topPos: topPos, leftPos: leftPos})
-        ui.htmlElementAttribute(this.element.getHtmlElement(), "src", "/img/explosion.gif")
+    constructor(private readonly ui: DomUi, topPos: number, leftPos: number) {
+        this.element = new GameElement(this.ui, 'img', 80, 80, 'explosion')
+        this.element.move({ topPos, leftPos })
+        this.ui.htmlElementAttribute(this.element.getHtmlElement(), 'src', '/img/explosion.gif')
     }
 
     public getElement(): GameElement {

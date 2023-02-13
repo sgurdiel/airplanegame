@@ -1,11 +1,11 @@
-import DomUi from "./DomUi";
-import GameElement, { GameElementPosition } from "./GameElement";
+import type DomUi from './DomUi'
+import GameElement, { type GameElementPosition } from './GameElement'
 
 export default class FireRound {
-    private element: GameElement
+    private readonly element: GameElement
 
-    constructor(private ui: DomUi) {
-        this.element = new GameElement(this.ui, "div", 10, 48, "airplaneFireRound")
+    constructor(ui: DomUi) {
+        this.element = new GameElement(ui, 'div', 10, 48, 'airplaneFireRound')
     }
 
     public fire(position: GameElementPosition): void {

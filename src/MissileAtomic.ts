@@ -1,6 +1,6 @@
-import DomUi from "./DomUi"
-import GameElement from "./GameElement"
-import { Missile } from "./Missile"
+import type DomUi from './DomUi'
+import GameElement from './GameElement'
+import { Missile } from './Missile'
 
 export default class MissileAtomic extends Missile {
     protected hitsTillDestruction: number = 3
@@ -8,7 +8,7 @@ export default class MissileAtomic extends Missile {
     protected speed: number = 6
 
     constructor(ui: DomUi) {
-        let element = new GameElement(ui, "div", 40, 80, "missileAtomic")
+        const element = new GameElement(ui, 'div', 40, 80, 'missileAtomic')
         super(element, ui.randomTopPos(element))
     }
 }

@@ -1,20 +1,20 @@
 import Airplane from './Airplane'
 import DomUi from './DomUi'
-import Radar, { radarMsg } from './Radar'
+import Radar, { type radarMsg } from './Radar'
 import Enemy from './Enemy'
 import { asyncDelay } from './Helpers'
 
 export default class Game {
-    private ui: DomUi
-    private airplane: Airplane
-    private radar: Radar
-    private enemy: Enemy 
+    private readonly ui: DomUi
+    private readonly airplane: Airplane
+    private readonly radar: Radar
+    private readonly enemy: Enemy
     private paused: boolean = false
     private validScreen: boolean = true
-    private renderTimeRate: number = 30
+    private readonly renderTimeRate: number = 30
     private ended: boolean = false
     private gameScore: number = 0
-    
+
     constructor() {
         this.ui = new DomUi()
         this.airplane = new Airplane(this.ui)
@@ -38,21 +38,21 @@ export default class Game {
             return
         }
         this.paused = this.validScreen ? pause : true
-        if (this.paused === false) {
+        if (!this.paused) {
             this.airplane.move()
         }
     }
 
-    private initUiEvents() {
+    private initUiEvents(): void {
         this.ui.moveAirplaneEvent((ev) => {
             const mouseEvent = ev as MouseEvent
             this.ui.setMouseTop(mouseEvent.clientY)
-            if (this.paused === false) {
+            if (!this.paused) {
                 this.airplane.move()
             }
         })
         this.ui.fireAirplaneFireRoundEvent((ev) => {
-            if (this.paused === false) {
+            if (!this.paused) {
                 this.airplane.fireRound()
                 ev.stopImmediatePropagation()
             }
@@ -63,18 +63,18 @@ export default class Game {
     }
 
     private cycleRendering(): void {
-        if (this.paused === false) {
+        if (!this.paused) {
             this.airplane.moveFiredRounds()
             this.enemy.attack()
             this.radar.scan()
             this.gameScore += this.radar.getIncreaseScore()
             this.ui.displayScore(this.gameScore)
             this.displayRadarMessages()
-            if (this.radar.towersDestroyed() === true) {
+            if (this.radar.towersDestroyed()) {
                 this.endGame()
             }
         }
-        if (this.ended === false) {
+        if (!this.ended) {
             setTimeout(() => { this.cycleRendering() }, this.renderTimeRate)
         }
     }
@@ -92,15 +92,17 @@ export default class Game {
                         .then(() => {
                             this.ui.displayRadarMsg(msg)
                         })
+                        .catch(() => {})
                 }
                 timeOffset += msg.displayTime
             })
-            if (this.radar.getMsgQueue()[amountMessages-1].displayTime > 0) {
+            if (this.radar.getMsgQueue()[amountMessages - 1].displayTime > 0) {
                 asyncDelay(timeOffset)
                     .then(() => {
                         this.ui.clearRadarMsg()
                         this.triggerGamePause(false)
                     })
+                    .catch(() => {})
             }
         }
     }
