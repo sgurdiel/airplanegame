@@ -5,7 +5,7 @@ import Explosion from './Explosion'
 import { asyncDelay } from './Helpers'
 import MissileAtomic from './MissileAtomic'
 
-export interface radarMsg {
+export interface RadarMsg {
     displayTime: number
     msg: string
     image: string
@@ -18,7 +18,7 @@ export default class Radar {
     private towerImpacted: boolean = false
     private towerImpacts: number = 0
     private readonly maxTowerImpacts: number = 4
-    private msgQueue: radarMsg[] = []
+    private msgQueue: RadarMsg[] = []
 
     constructor(private readonly ui: DomUi, private readonly airplane: Airplane, private readonly enemy: Enemy) {
     }
@@ -110,7 +110,7 @@ export default class Radar {
         return this.increaseScore
     }
 
-    public getMsgQueue(): radarMsg[] {
+    public getMsgQueue(): RadarMsg[] {
         return this.msgQueue
     }
 

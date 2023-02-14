@@ -1,6 +1,6 @@
 import Airplane from './Airplane'
 import DomUi from './DomUi'
-import Radar, { type radarMsg } from './Radar'
+import Radar, { type RadarMsg } from './Radar'
 import Enemy from './Enemy'
 import { asyncDelay } from './Helpers'
 
@@ -84,7 +84,7 @@ export default class Game {
         if (amountMessages > 0) {
             this.triggerGamePause(true)
             let timeOffset: number = 0
-            this.radar.getMsgQueue().forEach((msg: radarMsg, index: number) => {
+            this.radar.getMsgQueue().forEach((msg: RadarMsg, index: number) => {
                 if (index === 0) {
                     this.ui.displayRadarMsg(msg)
                 } else {

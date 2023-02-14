@@ -1,7 +1,7 @@
 import { type GameElementPosition } from './GameElement'
 import type GameElement from './GameElement'
 import { asyncDelay } from './Helpers'
-import { type radarMsg } from './Radar'
+import { type RadarMsg } from './Radar'
 
 export default class DomUi {
     private screenHeight: number = 0
@@ -132,7 +132,7 @@ export default class DomUi {
         this.htmlElementStyle(this.infoOverlay, 'visibility', (display ? 'visible' : 'hidden'))
     }
 
-    public displayRadarMsg(msg: radarMsg): void {
+    public displayRadarMsg(msg: RadarMsg): void {
         this.radarMsg.innerHTML = msg.msg
         const radarImg = document.createElement('img')
         radarImg.src = msg.image
