@@ -148,17 +148,17 @@ export default class DomUi {
         return document.createElement(type)
     }
 
-    public htmlElementAttribute(element: HTMLElement, name: string, value: string): DomUi {
+    public htmlElementAttribute(element: HTMLElement, name: string, value: string): this {
         element.setAttribute(name, value)
         return this
     }
 
-    public htmlElementStyle(element: HTMLElement, name: string, value: string): DomUi {
+    public htmlElementStyle(element: HTMLElement, name: string, value: string): this {
         element.style.setProperty(name, value)
         return this
     }
 
-    public htmlElementMove(element: HTMLElement, topPos: number, leftPos: number): DomUi {
+    public htmlElementMove(element: HTMLElement, topPos: number, leftPos: number): this {
         this.htmlElementStyle(element, 'top', topPos.toString().concat('px'))
         this.htmlElementStyle(element, 'left', leftPos.toString().concat('px'))
         return this
