@@ -3,3 +3,5 @@ public/js
 public/coverage/
 public/index.html
 .scannerwork/
+.env
+GEMINI.md

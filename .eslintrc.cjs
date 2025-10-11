@@ -3,9 +3,10 @@ module.exports = {
     browser: true,
     es2021: true
   },
-  extends: 'standard-with-typescript',
+  extends: ['plugin:@typescript-eslint/recommended', 'prettier'],
   overrides: [
   ],
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     project: 'tsconfig.json',
     ecmaVersion: 'latest',

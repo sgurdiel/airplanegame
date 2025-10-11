@@ -125,6 +125,7 @@ div#body div#game {
     min-width: 1024px;
     height: 658px;
     background-color: #020511;
+    border-radius: 20px;
 }
 
 div#body div#game div#airplane {
@@ -168,13 +169,13 @@ div#body div#game img.explosion {
 }
 
 div#footer {
-    height: 12px;
+    padding: 4px 0;
     border-top: 4px inset #12d912;
     background-color:black;
 }
 
 div#footer div#version {
-    font-size: 8px;
+    font-size: 0.8em;
     text-align: center;
     color: white;
 }
