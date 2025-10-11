@@ -1,7 +1,7 @@
-import Game from './Game'
+import Game from './Game';
 
 try {
-    new Game()
+  new Game();
 } catch (error) {
-    console.error(error)
+  console.error(error);
 }
