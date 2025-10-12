@@ -1,4 +1,4 @@
-import {expect, test, jest, describe} from "@jest/globals";
+import { expect, test, jest, describe } from '@jest/globals';
 import { asyncDelay } from '../src/Helpers';
 
 describe('asyncDelay', () => {

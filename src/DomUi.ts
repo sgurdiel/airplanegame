@@ -249,7 +249,9 @@ export default class DomUi {
   }
 
   public repaint(gameInstance: Game): void {
-    this.repaintRatePerSecond = Math.round(1000 / gameInstance.getMillisencondSinceLastPaint());
+    this.repaintRatePerSecond = Math.round(
+      1000 / gameInstance.getMillisencondSinceLastPaint(),
+    );
     window.requestAnimationFrame(gameInstance.paintFrame.bind(gameInstance));
   }
 

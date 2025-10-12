@@ -13,8 +13,12 @@ export default class Enemy {
   constructor(private readonly ui: DomUi) {}
 
   public attack(): void {
-    this.timeTillNextMissileHydrogen -= Math.round(1000 / this.ui.getRepaintRatePerSecond());
-    this.timeTillNextMissileAtomic -= Math.round(1000 / this.ui.getRepaintRatePerSecond());
+    this.timeTillNextMissileHydrogen -= Math.round(
+      1000 / this.ui.getRepaintRatePerSecond(),
+    );
+    this.timeTillNextMissileAtomic -= Math.round(
+      1000 / this.ui.getRepaintRatePerSecond(),
+    );
     if (this.timeTillNextMissileHydrogen <= 0) this.fireMissileHydrogen();
     if (this.timeTillNextMissileAtomic <= 0) this.fireMissileAtomic();
   }
