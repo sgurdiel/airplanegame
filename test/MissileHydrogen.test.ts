@@ -6,6 +6,7 @@ jest.mock("../src/DomUi")
 jest.mock("../src/GameElement")
 
 let ui: DomUi
+const repaintRatePerSecond: number = 50;
 
 beforeAll(() => {
     ui = new DomUi()
@@ -28,11 +29,12 @@ describe("Missile Hydrogen", () => {
     
     test("Moves", () => {
         const m = new MissileHydrogen(ui)
-        let leftPos = m.getLeftPos()+m.getSpeed()
-        m.move()
+        const pixelsToDisplace = Math.round(m.getSpeed() / repaintRatePerSecond);
+        let leftPos = m.getLeftPos() + pixelsToDisplace
+        m.move(repaintRatePerSecond)
         expect(m.getLeftPos()).toBe(leftPos)
-        leftPos += m.getSpeed()
-        m.move()
+        leftPos += pixelsToDisplace
+        m.move(repaintRatePerSecond)
         expect(m.getLeftPos()).toBe(leftPos)
     })
     

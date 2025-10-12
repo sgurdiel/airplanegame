@@ -10,7 +10,7 @@ export default class Airplane {
   private readonly fireRoundsFired: FireRound[] = [];
   private readonly fireRoundSpeed: number = 24;
   private reloading: boolean = false;
-  private readonly reloadTime: number = 1000;
+  private readonly reloadTime: number = 500;
 
   constructor(private readonly ui: DomUi) {
     this.element = new GameElement(this.ui, 'div', 58, 92, '', 'airplane');
@@ -54,7 +54,7 @@ export default class Airplane {
       this.fireRoundsFired.push(fireRound);
       this.ui.displayMagazineMsg(this.fireRoundsAvailable.length);
     }
-    if (this.fireRoundsAvailable.length === 0 && !this.reloading) {
+    if (this.fireRoundsAvailable.length === 0 && false === this.reloading) {
       this.ui.displayReloadingMsg(this.reloadTime);
       this.reloading = true;
       asyncDelay(this.reloadTime)

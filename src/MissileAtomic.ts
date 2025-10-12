@@ -5,7 +5,7 @@ import { Missile } from './Missile';
 export default class MissileAtomic extends Missile {
   protected hitsTillDestruction: number = 3;
   protected destructionScore: number = 1000;
-  protected speed: number = 6;
+  protected speed: number = 130; // pixels/sec
 
   constructor(ui: DomUi) {
     const element = new GameElement(ui, 'div', 40, 80, 'missileAtomic');

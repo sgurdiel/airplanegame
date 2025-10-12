@@ -11,26 +11,27 @@ export default class Game {
   private readonly enemy: Enemy;
   private paused: boolean = false;
   private validScreen: boolean = true;
-  private readonly renderTimeRate: number = 30;
   private ended: boolean = false;
   private gameScore: number = 0;
+  private lastRepaintTimestamp: number = 0;
+  private millisencondSinceLastPaint: number = 0;
 
   constructor() {
     this.ui = new DomUi();
     this.airplane = new Airplane(this.ui);
-    this.enemy = new Enemy(this.ui, this.renderTimeRate);
+    this.enemy = new Enemy(this.ui);
     this.radar = new Radar(this.ui, this.airplane, this.enemy);
     this.screenSizeCheck();
     this.initUiEvents();
-    this.cycleRendering();
+    this.ui.repaint(this);
   }
 
   private screenSizeCheck(): void {
-    if (this.ended) {
+    if (true === this.ended) {
       return;
     }
     this.validScreen = this.ui.supportedScreenSize();
-    this.triggerGamePause(!this.validScreen);
+    this.triggerGamePause(false === this.validScreen);
   }
 
   private triggerGamePause(pause: boolean): void {
@@ -38,7 +39,7 @@ export default class Game {
       return;
     }
     this.paused = this.validScreen ? pause : true;
-    if (!this.paused) {
+    if (false === this.paused) {
       this.airplane.move();
     }
   }
@@ -62,8 +63,11 @@ export default class Game {
     });
   }
 
-  private cycleRendering(): void {
-    if (!this.paused) {
+  public paintFrame(timestamp: number): void {
+    this.millisencondSinceLastPaint = timestamp - this.lastRepaintTimestamp;
+    this.lastRepaintTimestamp = timestamp;
+
+    if (false === this.paused) {
       this.airplane.moveFiredRounds();
       this.enemy.attack();
       this.radar.scan();
@@ -74,10 +78,8 @@ export default class Game {
         this.endGame();
       }
     }
-    if (!this.ended) {
-      setTimeout(() => {
-        this.cycleRendering();
-      }, this.renderTimeRate);
+    if (false === this.ended) {
+      this.ui.repaint(this);
     }
   }
 
@@ -127,7 +129,7 @@ export default class Game {
     return this.validScreen;
   }
 
-  public getRenderTimeRate(): number {
-    return this.renderTimeRate;
+  public getMillisencondSinceLastPaint(): number {
+    return this.millisencondSinceLastPaint;
   }
 }

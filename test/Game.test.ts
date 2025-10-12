@@ -1,4 +1,4 @@
-import {describe, expect, test, jest, afterEach, beforeAll, beforeEach} from "@jest/globals";
+import {describe, expect, test, jest, afterEach, beforeEach} from "@jest/globals";
 import Game from "../src/Game"
 import DomUi from "../src/DomUi"
 import Airplane from "../src/Airplane"
@@ -10,7 +10,6 @@ jest.mock("../src/Airplane")
 jest.mock("../src/Enemy")
 jest.mock("../src/Radar")
 jest.mock("../src/GameElement")
-jest.spyOn(global, 'setTimeout')
 
 let dom: JSDOM
 
@@ -36,8 +35,7 @@ describe("Game", () => {
         expect(airplaneMoveMock).toHaveBeenCalledTimes(0)
         expect(g.getPaused()).toBe(false)
         expect(g.getEnded()).toBe(false)
-        expect(setTimeout).toHaveBeenCalledTimes(1)
-        expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), g.getRenderTimeRate())
+        expect(g.getMillisencondSinceLastPaint()).toBe(0)
     })
 
     test("Invalid screen size pauses game", () => {
@@ -74,6 +72,8 @@ describe("Game", () => {
         jest.spyOn(DomUi.prototype, "windowResizeEvent").mockImplementation((listener) => {
             dom.window.addEventListener("resize", listener)
         })
+        let framePainted = false
+        const paintFrameMock = jest.spyOn(DomUi.prototype, "repaint").mockImplementation((g) => { if (false === framePainted) { framePainted = true; g.paintFrame(0) } })
         const g = new Game()
         expect(supportedScreenSizeMock).toHaveBeenCalledTimes(1)
         dom.window.dispatchEvent(new dom.window.Event("resize"))
@@ -105,6 +105,8 @@ describe("Game", () => {
     test("End game", () => {
         jest.spyOn(Radar.prototype, "towersDestroyed").mockReturnValue(true)
         const displayGameEndMock = jest.spyOn(DomUi.prototype, "displayGameEnd")
+        let framePainted = false
+        const paintFrameMock = jest.spyOn(DomUi.prototype, "repaint").mockImplementation((g) => { if (false === framePainted) { framePainted = true; g.paintFrame(0) } })
         const g = new Game()
         expect(g.getPaused()).toBe(true)
         expect(g.getEnded()).toBe(true)
@@ -119,7 +121,11 @@ describe("Game", () => {
         ])
         const displayRadarMsgMock = jest.spyOn(DomUi.prototype, "displayRadarMsg")
         const clearRadarMsgMock = jest.spyOn(DomUi.prototype, "clearRadarMsg")
+        let framePainted = false
+        const paintFrameMock = jest.spyOn(DomUi.prototype, "repaint").mockImplementation((g) => { if (false === framePainted) { framePainted = true; g.paintFrame(0) } })
+        
         let g: Game
+
         await new Promise(done => {
             g = new Game()
             done(true)
@@ -129,57 +135,4 @@ describe("Game", () => {
             expect(clearRadarMsgMock).toHaveBeenCalledTimes(1)
         })
     })
-
-    // test("Cycle rendering", () => {
-    //     const supportedScreenSizeMock = jest.spyOn(DomUi.prototype, "supportedScreenSize").mockReturnValue(true)
-    //     const moveFiredRoundsMock = jest.spyOn(Airplane.prototype, "moveFiredRounds")
-    //     const attackMock = jest.spyOn(Enemy.prototype, "attack")
-    //     let scanMock = jest.spyOn(Radar.prototype, "scan").mockReturnValue(false)
-    //     Object.defineProperty(Radar.prototype, "towerImpacted", { 
-    //         get: jest.fn(() => false),
-    //         configurable: true
-    //     })
-    //     let towerImpactedMock = jest.spyOn(Radar.prototype, "towerImpacted", "get").mockReturnValue(false)
-    //     Object.defineProperty(Radar.prototype, "towerImpacts", { 
-    //         get: jest.fn(() => 0),
-    //         configurable: true
-    //     })
-    //     let towerImpactsMock = jest.spyOn(Radar.prototype, "towerImpacts", "get").mockReturnValue(0)
-    //     Object.defineProperty(Radar.prototype, "maxTowerImpacts", { 
-    //         get: jest.fn(() => 4),
-    //         configurable: true
-    //     })
-    //     let maxTowerImpactsMock = jest.spyOn(Radar.prototype, "maxTowerImpacts", "get").mockReturnValue(4)
-    //     const displayScoreMock = jest.spyOn(DomUi.prototype, "displayScore")
-    //     const g = new Game()
-    //     expect(g.getPaused()).toBe(false)
-    //     expect(moveFiredRoundsMock).toHaveBeenCalledTimes(1)
-    //     expect(attackMock).toHaveBeenCalledTimes(1)
-    //     expect(scanMock).toHaveBeenCalledTimes(1)
-    //     expect(displayScoreMock).toHaveBeenCalledTimes(1)
-    //     expect(towerImpactedMock).toHaveBeenCalledTimes(1)
-
-    //     scanMock = jest.spyOn(Radar.prototype, "scan").mockReturnValue(true)
-    //     towerImpactedMock = jest.spyOn(Radar.prototype, "towerImpacted", "get").mockReturnValue(true)
-    //     await new Promise<boolean>(resolve: (() => {
-    //         g.cycleRendering()
-    //     })
-    //     expect(g.paused).toBe(true)
-    //     expect(moveFiredRoundsMock).toHaveBeenCalledTimes(2)
-    //     expect(attackMock).toHaveBeenCalledTimes(2)
-    //     expect(scanMock).toHaveBeenCalledTimes(2)
-    //     expect(displayScoreMock).toHaveBeenCalledTimes(2)
-    //     expect(towerImpactedMock).toHaveBeenCalledTimes(2)
-
-    //     towerImpactedMock = jest.spyOn(Radar.prototype, "towerImpacted", "get").mockReturnValue(true)
-    //     towerImpactsMock = jest.spyOn(Radar.prototype, "towerImpacts", "get").mockReturnValue(4)
-    //     g.cycleRendering()
-    //     expect(g.getPaused()).toBe(true)
-    //     expect(moveFiredRoundsMock).toHaveBeenCalledTimes(3)
-    //     expect(attackMock).toHaveBeenCalledTimes(3)
-    //     expect(scanMock).toHaveBeenCalledTimes(3)
-    //     expect(displayScoreMock).toHaveBeenCalledTimes(3)
-    //     expect(towerImpactedMock).toHaveBeenCalledTimes(3)
-    //     expect(g.getEnded()).toBe(true)
-    // })
 })

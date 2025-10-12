@@ -7,6 +7,7 @@ jest.mock("../src/GameElement")
 
 const ui = new DomUi()
 let gameElement: GameElement
+const repaintRatePerSecond: number = 50;
 
 beforeEach(() => {
     gameElement = new GameElement(ui, "div", 40, 80, "")
@@ -28,7 +29,7 @@ describe("Missile", () => {
         expect(m.getRadarDetected()).toBe(false)
         expect(m.getDestructionScore()).toBe(0)
         expect(m.getHitsTillDestruction()).toBe(1)
-        expect(m.getLeftPos()).toBe(-80)
+        expect(m.getLeftPos()).toBe(0)
         expect(m.getTopPos()).toBe(500)   
         expect(m.getSpeed()).toBe(0)     
         expect(m.getHeight()).toBe(40)
@@ -48,8 +49,9 @@ describe("Missile", () => {
         class Missile1 extends Missile {}
         const m = new Missile1(gameElement, 500)
         const leftPos = m.getLeftPos()
-        m.move()
-        expect(m.getLeftPos()).toBe(leftPos - m.getSpeed())
+        m.move(repaintRatePerSecond)
+        const pixelsToDisplace = Math.round(m.getSpeed() / repaintRatePerSecond);
+        expect(m.getLeftPos()).toBe(leftPos + pixelsToDisplace)
         expect(moveMock).toHaveBeenCalledTimes(1)
         expect(moveMock).toHaveBeenCalledWith({topPos: m.getTopPos(), leftPos: m.getLeftPos()})
     })

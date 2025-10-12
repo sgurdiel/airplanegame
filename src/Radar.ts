@@ -43,7 +43,7 @@ export default class Radar {
         this.enemy.getMissilesFired()[index].setRadarDetected();
       } else if (
         !this.checkMissileDetruction(index) &&
-        this.enemy.getMissilesFired()[index].move() >=
+        this.enemy.getMissilesFired()[index].move(this.ui.getRepaintRatePerSecond()) >=
           this.ui.getMaxLeftPosGaimingContainer()
       ) {
         this.towerImpact(index);

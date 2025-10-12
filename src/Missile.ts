@@ -3,24 +3,26 @@ import type GameElement from './GameElement';
 export abstract class Missile {
   protected destructionScore: number = 0;
   protected speed: number = 0;
-  private leftPos: number;
+  private leftPos: number = 0;
   private radarDetected: boolean = false;
   protected hitsTillDestruction: number = 1;
 
   constructor(
     private readonly element: GameElement,
     private readonly topPos: number,
-  ) {
-    this.leftPos = -this.element.getImgL();
-  }
+  ) {}
 
   public getElement(): GameElement {
     return this.element;
   }
 
-  public move(): number {
-    this.leftPos += this.speed;
-    this.element.move({ topPos: this.topPos, leftPos: this.leftPos });
+  public move(repaintRatePerSecond: number): number {
+    const pixelsToDisplace = Math.round(this.speed / repaintRatePerSecond);
+    this.leftPos += pixelsToDisplace;
+    this.element.move({
+      topPos: this.topPos,
+      leftPos: this.leftPos,
+    });
     return this.leftPos;
   }
 

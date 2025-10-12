@@ -10,16 +10,13 @@ export default class Enemy {
   private timeTillNextMissileHydrogen: number = this.missileHydrogenReloadTime;
   private timeTillNextMissileAtomic: number = this.missileAtomicReloadTime;
 
-  constructor(
-    private readonly ui: DomUi,
-    private readonly renderTimeRate: number,
-  ) {}
+  constructor(private readonly ui: DomUi) {}
 
   public attack(): void {
+    this.timeTillNextMissileHydrogen -= Math.round(1000 / this.ui.getRepaintRatePerSecond());
+    this.timeTillNextMissileAtomic -= Math.round(1000 / this.ui.getRepaintRatePerSecond());
     if (this.timeTillNextMissileHydrogen <= 0) this.fireMissileHydrogen();
     if (this.timeTillNextMissileAtomic <= 0) this.fireMissileAtomic();
-    this.timeTillNextMissileHydrogen -= this.renderTimeRate;
-    this.timeTillNextMissileAtomic -= this.renderTimeRate;
   }
 
   private fireMissileHydrogen(): void {

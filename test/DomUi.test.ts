@@ -6,7 +6,9 @@ import DomUi from "../src/DomUi"
 import { readFileSync } from "fs";
 import GameElement from "../src/GameElement";
 import * as Helpers from "../src/Helpers"
+import Game from "../src/Game";
 jest.mock("../src/GameElement")
+jest.mock("../src/Game")
 
 beforeEach(() => {
     jest.spyOn(Helpers, "asyncDelay").mockImplementation(() => {
@@ -61,6 +63,7 @@ describe("DomUi", () => {
         expect(ui.getMouseTop()).toBe(400)
         expect(ui.getMaxLeftPosGaimingContainer()).toBe(ui.getGameContainer().getBoundingClientRect().left + ui.getGameContainerWith())
         expect(ui.getScreenHeight()).toBe(768)
+        expect(ui.getRepaintRatePerSecond()).toBe(0)
     })
 
     test.each([
@@ -188,5 +191,20 @@ describe("DomUi", () => {
         const div = ui.createHtmlElement("div")
         ui.htmlElementRemove(div)
         expect(removeMock).toHaveBeenCalledTimes(1)
+    })
+
+    test("Repaint", () => {
+        jest.useFakeTimers()
+        const ui = new DomUi()
+        const game = new Game()
+        const paintFrameMock = jest.spyOn(game, "paintFrame")
+        ui.repaint(game)
+        // At this point in time, the callback should not have been called yet
+        expect(paintFrameMock).not.toBeCalled()
+        // Fast-forward until all timers have been executed
+        jest.runAllTimers()
+        // Now our callback should have been called!
+        expect(paintFrameMock).toBeCalled()
+        expect(paintFrameMock).toHaveBeenCalledTimes(1)
     })
 })

@@ -39,6 +39,7 @@ describe("Airplane", () => {
         let a = new Airplane(ui)
         expect(a.getFireRoundsAvailable().length).toBe(a.getFireRoundsCapacity())
         expect(a.getFireRoundsFired().length).toBe(0)
+        expect(a.getReloading()).toBe(false)
         expect(gameElementMoveMock).toHaveBeenCalledWith({topPos: 400, leftPos: 800 - a.getElement().getImgL() - 4})
     })
 

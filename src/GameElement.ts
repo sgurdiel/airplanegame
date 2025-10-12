@@ -7,7 +7,10 @@ export interface GameElementPosition {
 
 export default class GameElement {
   private readonly htmlElement: HTMLElement;
-  private position: GameElementPosition = { topPos: 0, leftPos: 0 };
+  private position: GameElementPosition = {
+    topPos: 0,
+    leftPos: 0,
+  };
 
   constructor(
     private readonly ui: DomUi,

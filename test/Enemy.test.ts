@@ -1,4 +1,4 @@
-import {describe, expect, test, jest, afterEach, beforeAll} from "@jest/globals";
+import {describe, expect, test, jest, afterEach, beforeAll, beforeEach} from "@jest/globals";
 import Enemy from "../src/Enemy"
 import DomUi from "../src/DomUi"
 import MissileHydrogen from "../src/MissileHydrogen"
@@ -10,9 +10,12 @@ jest.mock("../src/MissileHydrogen")
 jest.mock("../src/MissileAtomic")
 
 let ui: DomUi
+const repaintRatePerSecond: number = 50;
+const millisencondSinceLastPaint: number = 20; // 1000 / repaintRatePerSecond
 
-beforeAll(() => {
+beforeEach(() => {
     ui = new DomUi()
+    jest.spyOn(ui, "getRepaintRatePerSecond").mockReturnValue(repaintRatePerSecond)
 })
 
 afterEach(() => {
@@ -23,37 +26,43 @@ afterEach(() => {
 
 describe("Enemy", () => {
     test("Propeties are defined and default values set", () => {
-        const e = new Enemy(ui, 50)
+        const e = new Enemy(ui)
         expect(e.getMissilesFired().length).toBe(0)
         expect(e.getTimeTillNextMissileHydrogen()).toBe(e.getMissileHydrogenReloadTime())
         expect(e.getTimeTillNextMissileAtomic()).toBe(e.getMissileAtomicReloadTime())
     })
 
-    test("Missiles launch countdown is reduced on every call to attach", () => {
-        const renderTimeRate = 50
-        const e = new Enemy(ui, renderTimeRate)
+    test("Missiles launch countdown is reduced on every screen repaint", () => {
+        const e = new Enemy(ui)
         e.attack()
-        expect(e.getTimeTillNextMissileHydrogen()).toBe(e.getMissileHydrogenReloadTime() - renderTimeRate)
-        expect(e.getTimeTillNextMissileAtomic()).toBe(e.getMissileAtomicReloadTime() - renderTimeRate)
+        expect(e.getTimeTillNextMissileHydrogen()).toBe(e.getMissileHydrogenReloadTime() - millisencondSinceLastPaint)
+        expect(e.getTimeTillNextMissileAtomic()).toBe(e.getMissileAtomicReloadTime() - millisencondSinceLastPaint)
         e.attack()
-        expect(e.getTimeTillNextMissileHydrogen()).toBe(e.getMissileHydrogenReloadTime() - (renderTimeRate*2))
-        expect(e.getTimeTillNextMissileAtomic()).toBe(e.getMissileAtomicReloadTime() - (renderTimeRate*2))
+        expect(e.getTimeTillNextMissileHydrogen()).toBe(e.getMissileHydrogenReloadTime() - (millisencondSinceLastPaint * 2))
+        expect(e.getTimeTillNextMissileAtomic()).toBe(e.getMissileAtomicReloadTime() - (millisencondSinceLastPaint * 2))
     })
 
     test("MissileHydrogen is launched when countdown ends", () => {
-        const e = new Enemy(ui, 1500)
-        e.attack()
-        e.attack()
+        const e = new Enemy(ui)
+        expect(e.getMissilesFired().length).toBe(0)
+        const loopCount = e.getMissileHydrogenReloadTime() / millisencondSinceLastPaint
+        for (let i = 0; i < loopCount; i++) {
+            e.attack()
+        }
         expect(e.getMissilesFired().length).toBe(1)
         expect(e.getMissilesFired()[0]).toBeInstanceOf(MissileHydrogen)
-        expect(e.getTimeTillNextMissileHydrogen()).toBe(e.getMissileHydrogenReloadTime() - 1500)
+        expect(e.getTimeTillNextMissileHydrogen()).toBe(e.getMissileHydrogenReloadTime())
     })
 
     test("MissileAtomic is launched when countdown ends", () => {
-        const e = new Enemy(ui, 15000)
-        e.attack()
-        e.attack()
+        const e = new Enemy(ui)
+        expect(e.getMissilesFired().filter((item) => { return item instanceof MissileAtomic }).length).toBe(0)
+        const loopCount = e.getMissileAtomicReloadTime() / millisencondSinceLastPaint
+        for (let i = 0; i < loopCount; i++) {
+            e.attack()
+        }
         expect(e.getMissilesFired().filter((item) => { return item instanceof MissileAtomic }).length).toBe(1)
-        expect(e.getTimeTillNextMissileAtomic()).toBe(e.getMissileAtomicReloadTime() - 15000)
+        expect(e.getMissilesFired().filter((item) => { return item instanceof MissileAtomic })[0]).toBeInstanceOf(MissileAtomic)
+        expect(e.getTimeTillNextMissileAtomic()).toBe(e.getMissileAtomicReloadTime())
     })
 })

@@ -1,4 +1,5 @@
 import { type GameElementPosition } from './GameElement';
+import Game from './Game';
 import type GameElement from './GameElement';
 import { asyncDelay } from './Helpers';
 import { type RadarMsg } from './Radar';
@@ -21,6 +22,7 @@ export default class DomUi {
   private readonly errorContainer: HTMLElement;
   private readonly radarScreen: HTMLElement;
   private readonly radarMsg: HTMLElement;
+  private repaintRatePerSecond: number = 0;
 
   constructor() {
     const gamingElement = document.getElementById('game');
@@ -244,5 +246,14 @@ export default class DomUi {
 
   public getGameContainerWith(): number {
     return this.gameContainerWith;
+  }
+
+  public repaint(gameInstance: Game): void {
+    this.repaintRatePerSecond = Math.round(1000 / gameInstance.getMillisencondSinceLastPaint());
+    window.requestAnimationFrame(gameInstance.paintFrame.bind(gameInstance));
+  }
+
+  public getRepaintRatePerSecond(): number {
+    return this.repaintRatePerSecond;
   }
 }
