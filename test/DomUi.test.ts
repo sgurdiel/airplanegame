@@ -34,9 +34,9 @@ describe('DomUi', () => {
     { id: 'radarMsg' },
   ])('DOM HTMLElement with $id present', ({ id }) => {
     const t = () => {
-      const ui = new DomUi();
+      new DomUi();
     };
-    expect(t).toThrowError("Fatal: Missing HTML Element with id '" + id + "'");
+    expect(t).toThrow("Fatal: Missing HTML Element with id '" + id + "'");
     html += '<div id="' + id + '"></div>';
     window.document.body.innerHTML = html;
   });
@@ -263,11 +263,10 @@ describe('DomUi', () => {
     const paintFrameMock = jest.spyOn(game, 'paintFrame');
     ui.repaint(game);
     // At this point in time, the callback should not have been called yet
-    expect(paintFrameMock).not.toBeCalled();
+    expect(paintFrameMock).not.toHaveBeenCalled();
     // Fast-forward until all timers have been executed
     jest.runAllTimers();
     // Now our callback should have been called!
-    expect(paintFrameMock).toBeCalled();
     expect(paintFrameMock).toHaveBeenCalledTimes(1);
   });
 });

@@ -118,7 +118,7 @@ describe('Game', () => {
     const g = new Game();
     expect(g.getPaused()).toBe(false);
     div.dispatchEvent(new dom.window.Event('mousemove'));
-    expect(airplaneMoveMock).toBeCalledTimes(1);
+    expect(airplaneMoveMock).toHaveBeenCalledTimes(1);
   });
 
   test('Mouse click', () => {
@@ -130,7 +130,7 @@ describe('Game', () => {
     const airplaneFireRoundMock = jest.spyOn(Airplane.prototype, 'fireRound');
     new Game();
     dom.window.document.dispatchEvent(new dom.window.Event('mousedown'));
-    expect(airplaneFireRoundMock).toBeCalledTimes(1);
+    expect(airplaneFireRoundMock).toHaveBeenCalledTimes(1);
   });
 
   test('End game', () => {

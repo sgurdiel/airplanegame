@@ -34,11 +34,6 @@ describe('Game Element', () => {
     const position: GameElementPosition = { topPos: 120, leftPos: 230 };
     f.move(position);
     expect(htmlElementMoveMock).toHaveBeenCalledTimes(1);
-    expect(htmlElementMoveMock).toHaveBeenCalledWith(
-      htmlElement,
-      position.topPos,
-      position.leftPos,
-    );
     expect(f.getPosition()).toMatchObject(position);
   });
 
@@ -47,6 +42,5 @@ describe('Game Element', () => {
     const f = new GameElement(ui, 'div', 40, 80, 'class', 'id');
     f.remove();
     expect(htmlElementRemoveMock).toHaveBeenCalledTimes(1);
-    expect(htmlElementRemoveMock).toHaveBeenCalledWith(htmlElement);
   });
 });

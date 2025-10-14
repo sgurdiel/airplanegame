@@ -5,8 +5,8 @@ import MissileHydrogen from './MissileHydrogen';
 
 export default class Enemy {
   private readonly missilesFired: Missile[] = [];
-  private readonly missileHydrogenReloadTime = 1500;
-  private readonly missileAtomicReloadTime = 15000;
+  private readonly missileHydrogenReloadTime: number = 1500;
+  private readonly missileAtomicReloadTime: number = 15000;
   private timeTillNextMissileHydrogen: number = this.missileHydrogenReloadTime;
   private timeTillNextMissileAtomic: number = this.missileAtomicReloadTime;
 

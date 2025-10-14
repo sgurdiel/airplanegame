@@ -3,7 +3,7 @@
   "env": {
     "APP_RELEASE": "DEV"
   },
-  "packages": ["nodejs@23.11.0"],
+  "packages": ["nodejs@24"],
   "shell": {
     "init_hook": [
       "echo 'Welcome to devbox!' > /dev/null"

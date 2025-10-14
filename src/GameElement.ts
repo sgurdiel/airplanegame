@@ -1,6 +1,6 @@
 import type DomUi from './DomUi';
 
-export interface GameElementPosition {
+export type GameElementPosition = {
   topPos: number;
   leftPos: number;
 }

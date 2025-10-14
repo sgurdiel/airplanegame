@@ -37,6 +37,8 @@ describe('Enemy', () => {
   test('Propeties are defined and default values set', () => {
     const e = new Enemy(ui);
     expect(e.getMissilesFired().length).toBe(0);
+    expect(e.getMissileHydrogenReloadTime()).toBeGreaterThan(0);
+    expect(e.getMissileAtomicReloadTime()).toBeGreaterThan(0);
     expect(e.getTimeTillNextMissileHydrogen()).toBe(
       e.getMissileHydrogenReloadTime(),
     );
