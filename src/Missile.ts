@@ -1,68 +1,73 @@
-import type GameElement from './GameElement'
+import type GameElement from './GameElement';
 
 export abstract class Missile {
-    protected destructionScore: number = 0
-    protected speed: number = 0
-    private leftPos: number
-    private radarDetected: boolean = false
-    protected hitsTillDestruction: number = 1
+  protected destructionScore: number = 0;
+  protected speed: number = 0;
+  private leftPos: number = 0;
+  private radarDetected: boolean = false;
+  protected hitsTillDestruction: number = 1;
 
-    constructor(private readonly element: GameElement, private readonly topPos: number) {
-        this.leftPos = -this.element.getImgL()
-    }
+  constructor(
+    private readonly element: GameElement,
+    private readonly topPos: number,
+  ) {}
 
-    public getElement(): GameElement {
-        return this.element
-    }
+  public getElement(): GameElement {
+    return this.element;
+  }
 
-    public move(): number {
-        this.leftPos += this.speed
-        this.element.move({ topPos: this.topPos, leftPos: this.leftPos })
-        return this.leftPos
-    }
+  public move(repaintRatePerSecond: number): number {
+    const pixelsToDisplace = Math.round(this.speed / repaintRatePerSecond);
+    this.leftPos += pixelsToDisplace;
+    this.element.move({
+      topPos: this.topPos,
+      leftPos: this.leftPos,
+    });
+    return this.leftPos;
+  }
 
-    public getRadarDetected(): boolean {
-        return this.radarDetected
-    }
+  public getRadarDetected(): boolean {
+    return this.radarDetected;
+  }
 
-    public setRadarDetected(): void {
-        this.radarDetected = true
-    }
+  public setRadarDetected(): void {
+    this.radarDetected = true;
+  }
 
-    public getHitsTillDestruction(): number {
-        return this.hitsTillDestruction
-    }
+  public getHitsTillDestruction(): number {
+    return this.hitsTillDestruction;
+  }
 
-    public receiveImpact(): number {
-        this.hitsTillDestruction--
-        return this.hitsTillDestruction
-    }
+  public receiveImpact(): number {
+    this.hitsTillDestruction--;
+    return this.hitsTillDestruction;
+  }
 
-    public getDestructionScore(): number {
-        return this.destructionScore
-    }
+  public getDestructionScore(): number {
+    return this.destructionScore;
+  }
 
-    public getTopPos(): number {
-        return this.topPos
-    }
+  public getTopPos(): number {
+    return this.topPos;
+  }
 
-    public getLeftPos(): number {
-        return this.leftPos
-    }
+  public getLeftPos(): number {
+    return this.leftPos;
+  }
 
-    public getSpeed(): number {
-        return this.speed
-    }
+  public getSpeed(): number {
+    return this.speed;
+  }
 
-    public getHeight(): number {
-        return this.element.getImgH()
-    }
+  public getHeight(): number {
+    return this.element.getImgH();
+  }
 
-    public getLength(): number {
-        return this.element.getImgL()
-    }
+  public getLength(): number {
+    return this.element.getImgL();
+  }
 
-    public remove(): void {
-        this.element.remove()
-    }
+  public remove(): void {
+    this.element.remove();
+  }
 }

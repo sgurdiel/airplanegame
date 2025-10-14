@@ -32,7 +32,7 @@ var config = {
 
 module.exports = (env, argv) => {
   if (argv.mode === "development") {
-    //config.devtool = "eval";
+    config.devtool = "eval-source-map";
   }
 
   if (argv.mode === "production") {

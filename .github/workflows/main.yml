@@ -1,0 +1,35 @@
+name: Jest tests
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    name: airplanegame
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup devbox
+      uses: jetify-com/devbox-install-action@v0.14.0
+      with:
+        # Caching the entire Nix store in github based on your devbox.json
+        enable-cache: true
+
+    - name: Install npm packages
+      run: devbox run npm install
+
+    - name: Run build
+      run: devbox run npm run pro:build
+
+    - name: Run tests
+      run: devbox run npm run test
