@@ -3,7 +3,7 @@ import type DomUi from './DomUi';
 export type GameElementPosition = {
   topPos: number;
   leftPos: number;
-}
+};
 
 export default class GameElement {
   private readonly htmlElement: HTMLElement;
