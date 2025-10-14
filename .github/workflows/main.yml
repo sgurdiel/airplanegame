@@ -28,7 +28,7 @@ jobs:
     - name: Install npm packages
       run: devbox run npm install
 
-    - name: Run tests
+    - name: Run build
       run: devbox run npm run pro:build
 
     - name: Run tests
