@@ -28,8 +28,14 @@ jobs:
     - name: Install npm packages
       run: devbox run npm install
 
-    - name: Run build
-      run: devbox run npm run pro:build
+    - name: Run lint
+      run: devbox run npm run lint
+
+    - name: Run formatter
+      run: devbox run npm run format:check
 
     - name: Run tests
-      run: devbox run npm run test
+      run: devbox run npm run test:coverage
+
+    - name: Run build
+      run: devbox run npm run pro:build

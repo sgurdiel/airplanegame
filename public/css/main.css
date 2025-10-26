@@ -2,26 +2,33 @@
     user-select: none;
 }
 
-html {
+html, body {
     height: 100%;
+    margin: 0;
 }
 
 body {
     padding: 0;
-    margin: 0;
     box-sizing: border-box;
     overflow: hidden;
     font-family: 'Orbitron', sans-serif;
     font-size: 16px;
-    min-width: 800px;
-    min-height: 600px;
+    width: 100%;
     height: 100%;
+    background-color: black;
+}
+
+div#app {
+    height: 100%;
+    width: 100%;
     display: flex;
     flex-flow: column nowrap;
-    justify-content: stretch;
+    justify-content: space-between;
+    align-items: center;
 }
 
 div#menu {
+    width: 100%;
     height: 76px;
     padding: 0;
     margin: 0;
@@ -29,11 +36,10 @@ div#menu {
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
-    color: red;
     text-align: center;
     align-items: center;
     background-image: url(/img/menuBg.png);
-    border-bottom: 4px outset #12d912;
+    border-bottom: 4px solid #12d912;
 }
 
 div#menu div#menuScore {
@@ -42,9 +48,9 @@ div#menu div#menuScore {
     padding: 6px;
     color: #12d912;
     border-radius: 20px;
-    border: 4px outset #12d912;
+    border: 4px solid #12d912;
     height: 22px;
-    min-width: 220px;
+    min-width: 180px;
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
@@ -54,123 +60,78 @@ div#menu div#menuRounds {
     background-color: black;
     padding: 6px;
     color: #9b5811;
-    border: 4px outset #9b5811;
+    border-radius: 20px;
+    border: 4px solid #9b5811;
     width: 150px;
     height: 22px;
 }
 
-div#menu div#menuRounds span#magazineMsg {
+div#menu div#menuRounds .magazine {
     display: none;
-}
-
-div#menu div#menuRounds span#reloadingMsg {
-    animation: blinker 0.3s linear infinite;
-    display: none;
-}
-
-@keyframes blinker {
-    50% {
-        opacity: 0;
-    }
 }
 
 div#menu div#menuRadar {
     margin-right: 20px;
     display: flex;
     flex-flow: row nowrap;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     border-radius: 20px;
-    border: 4px outset #12d912;
+    border: 4px solid #12d912;
     width: 300px;
     height: 52px;
     background: black;
-    padding: 2px;
+    padding: 2px 10px;
 }
 
 div#menu div#menuRadar div#radarMsg {
+    flex-grow: 1;
     color: #bd1111;
+    text-align: center;
+    font-size: 12px    
 }
 
-div#menu div#menuRadar div#radarImg img {
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: auto;
-    margin-bottom: auto;
+div#menu div#menuRadar div#radarImg {
+    flex-grow: 0;
+    margin: auto;
     display: block;
-    max-height: 54px;
-    border-radius: 14px;
+    height: 50px;
+    width: 55px;
+    background-image: url(/img/Sprite.png);
+    padding: 0;
+    margin: 0;
+    border: none;
+    visibility: hidden;
 }
 
 div#body {
-    flex: auto;
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: center;
-    align-items: center;
-    background-color: black;
-}
-
-div#body div.sides {
-    height: 100%;
-    width: 100%;
-    background-color: black;
-    z-index: 99;
-}
-
-div#body div#game {
-    z-index: 0;
     display: block;
-    width: 1024px;
-    min-width: 1024px;
-    height: 658px;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    padding-bottom: 24px;
+}
+
+div#body canvas#game {
     background-color: #020511;
     border-radius: 20px;
-}
-
-div#body div#game div#airplane {
-    position: absolute;
-    z-index:3;
-    width:92px;
-    height:58px;
-    background-image: url(/img/airplane.png);
-}
-
-div#body div#game div.airplaneFireRound {
-    position: absolute;
-    z-index: 1;
-    height: 10px;
-    width: 48px;
-    background-image: url(/img/missile3.png);
-}
-
-div#body div#game div.missileHydrogen {
-    position: absolute;
-    z-index:1;
-    height: 40px;
-    width: 122px;
-    background-image: url(/img/missile1.png);
-}
-
-div#body div#game div.missileAtomic {
-    position: absolute;
-    z-index:1;
-    height: 40px;
-    width: 80px;
-    background-image: url(/img/missile2.png);
-}
-
-div#body div#game img.explosion {
-    position: absolute;
-    z-index:2;
-    border: none;
-    margin: 0;
-    padding: 0;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 4px solid #12d912;
+    box-sizing: border-box;
+    cursor: crosshair;
 }
 
 div#footer {
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    text-align: center;
     padding: 4px 0;
-    border-top: 4px inset #12d912;
+    font-size: 0.8em;
+    border-top: 4px solid #12d912;
     background-color:black;
 }
 
@@ -185,35 +146,72 @@ div#infoOverlay {
     position: absolute;
     height: 100%;
     width: 100%;
-    background: rgba(255, 255, 255, 0.6);
+    background: rgba(51, 48, 48, 0.9);
     visibility: hidden;
+    top: 0px;
+    left: 0px;
+    margin: 0;
+    padding: 0;
 }
 
-div#infoOverlay div.infoContainer {
+div#infoOverlay div#infoContainer {
     z-index: 999;
     position: absolute;
-    height: 600px;
-    width: 600px;
+    min-height: 740px;
+    min-width: 1032px;
+    width: 50%;
+    height: 50%;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: black;
     border-radius: 40px;
+    color: #12d912;
+    font-size: 2vmax;
 }
 
-div#infoOverlay div.infoContainer div {
-    visibility: hidden;
-    width: 100%;
-    height: 100%;
-    color: red;
-    font-size: 32px;
-}
-
-div#infoOverlay div.infoContainer p {
+div#infoOverlay div#infoContainer p {
     position: absolute;
     margin: 0;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
+}
+
+.errorContainer {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%,-30%);
+    width: 100%;
+    color: #12d912;
+}
+
+.errorContainer .hugeMessage {
+    font-size: 14em;
+    text-align: center;
+    font-weight: bold;
+    text-shadow: 0 0 4px var(--color-light), 0 0 10px var(--color-light);
+}
+
+.errorContainer .hugeMessageDesc {
+    font-size: 2em;
+    text-align: center;
+    font-weight: bold;
+    text-shadow: 0 0 2px var(--color-light), 0 0 5px var(--color-light);
+}
+
+/* Basic responsiveness */
+@media screen and (max-width: 800px),
+        screen and (max-height: 600px) {
+    body {
+        font-size: 1.5vmax;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    #menuScore, #menuRounds , #menuRadar {
+        visibility: hidden;
+    }
 }

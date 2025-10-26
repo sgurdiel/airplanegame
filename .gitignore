@@ -1,7 +1,9 @@
 node_modules/
-public/js
-public/coverage/
-public/index.html
+public/js/
+public/*.html
 .scannerwork/
 .env
+.vscode/
 GEMINI.md
+CLAUDE.md
+sonar-project.properties
