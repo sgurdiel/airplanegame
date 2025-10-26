@@ -1,135 +1,76 @@
-import Airplane from './Airplane';
-import DomUi from './DomUi';
-import Radar, { type RadarMsg } from './Radar';
-import Enemy from './Enemy';
-import { asyncDelay } from './Helpers';
+import { PlayerControlsDom } from './IO/Infrastructure/Dom/PlayerControlsDom';
+import { ScreenDom } from './IO/Infrastructure/Dom/ScreenDom';
+import { DashboardDom } from './IO/Infrastructure/Dom/Dashboard/DashboardDom';
+import { EnemyDom } from './Enemy/Infrastructure/Dom/EnemyDom';
+import { PlayerDom } from './Player/Infrastucture/Dom/PlayerDom';
+import { HitDom } from './Hit/Infrastructure/Dom/HitDom';
+import { MenuDom } from './IO/Infrastructure/Dom/MenuDom';
 
 export default class Game {
-  private readonly ui: DomUi;
-  private readonly airplane: Airplane;
-  private readonly radar: Radar;
-  private readonly enemy: Enemy;
-  private paused: boolean = false;
-  private validScreen: boolean = true;
-  private ended: boolean = false;
-  private gameScore: number = 0;
-  private lastRepaintTimestamp: number = 0;
-  private millisencondSinceLastPaint: number = 0;
+  private readonly player: PlayerDom;
+  private readonly enemy: EnemyDom;
+  private readonly screen: ScreenDom;
+  private readonly dashboard: DashboardDom;
+  private readonly controls: PlayerControlsDom;
+  private readonly menu: MenuDom;
+  private millisecondsSinceLastAnimateCall: number = 0;
+  private lastAnimateCallTimestamp: number = 0;
+  private animateRatePerSecond: number = 0;
 
   constructor() {
-    this.ui = new DomUi();
-    this.airplane = new Airplane(this.ui);
-    this.enemy = new Enemy(this.ui);
-    this.radar = new Radar(this.ui, this.airplane, this.enemy);
-    this.screenSizeCheck();
-    this.initUiEvents();
-    this.ui.repaint(this);
+    this.player = new PlayerDom();
+    this.enemy = new EnemyDom();
+
+    this.dashboard = new DashboardDom(this.player, this.enemy);
+    this.screen = new ScreenDom(
+      this.player,
+      this.enemy,
+      new HitDom(this.player, this.enemy),
+    );
+    this.menu = new MenuDom();
+
+    this.controls = new PlayerControlsDom(
+      this.screen,
+      this.player,
+      this.dashboard,
+    );
+
+    this.requestAnimation();
   }
 
-  private screenSizeCheck(): void {
-    if (true === this.ended) {
-      return;
-    }
-    this.validScreen = this.ui.supportedScreenSize();
-    this.triggerGamePause(false === this.validScreen);
-  }
+  private animate(timestamp: number): void {
+    this.millisecondsSinceLastAnimateCall = Math.round(
+      timestamp - this.lastAnimateCallTimestamp,
+    );
+    this.animateRatePerSecond = Math.round(
+      1000 / this.millisecondsSinceLastAnimateCall,
+    );
+    this.lastAnimateCallTimestamp = timestamp;
 
-  private triggerGamePause(pause: boolean): void {
-    if (this.paused === pause || this.ended) {
-      return;
+    if (this.controls.animateScreen()) {
+      this.screen.animate(
+        this.animateRatePerSecond,
+        this.millisecondsSinceLastAnimateCall,
+      );
     }
-    this.paused = this.validScreen ? pause : true;
-    if (false === this.paused) {
-      this.airplane.move();
-    }
-  }
+    this.dashboard.animate(
+      this.controls.animateScreen(),
+      this.millisecondsSinceLastAnimateCall,
+    );
+    this.menu.animate(
+      this.millisecondsSinceLastAnimateCall,
+      this.controls.getGameInitiated(),
+      this.controls.animateScreen(),
+      this.dashboard.getPaused(),
+      this.player.defeated(),
+    );
 
-  private initUiEvents(): void {
-    this.ui.moveAirplaneEvent((ev) => {
-      const mouseEvent = ev as MouseEvent;
-      this.ui.setMouseTop(mouseEvent.clientY);
-      if (!this.paused) {
-        this.airplane.move();
-      }
-    });
-    this.ui.fireAirplaneFireRoundEvent((ev) => {
-      if (!this.paused) {
-        this.airplane.fireRound();
-        ev.stopImmediatePropagation();
-      }
-    });
-    this.ui.windowResizeEvent(() => {
-      this.screenSizeCheck();
-    });
-  }
-
-  public paintFrame(timestamp: number): void {
-    this.millisencondSinceLastPaint = timestamp - this.lastRepaintTimestamp;
-    this.lastRepaintTimestamp = timestamp;
-
-    if (false === this.paused) {
-      this.airplane.moveFiredRounds();
-      this.enemy.attack();
-      this.radar.scan();
-      this.gameScore += this.radar.getIncreaseScore();
-      this.ui.displayScore(this.gameScore);
-      this.displayRadarMessages();
-      if (this.radar.towersDestroyed()) {
-        this.endGame();
-      }
-    }
-    if (false === this.ended) {
-      this.ui.repaint(this);
+    if (false === this.menu.gameOverDisplayed()) {
+      this.requestAnimation();
     }
   }
 
-  private displayRadarMessages(): void {
-    const amountMessages: number = this.radar.getMsgQueue().length;
-    if (amountMessages > 0) {
-      this.triggerGamePause(true);
-      let timeOffset: number = 0;
-      this.radar.getMsgQueue().forEach((msg: RadarMsg, index: number) => {
-        if (index === 0) {
-          this.ui.displayRadarMsg(msg);
-        } else {
-          asyncDelay(timeOffset)
-            .then(() => {
-              this.ui.displayRadarMsg(msg);
-            })
-            .catch(() => {});
-        }
-        timeOffset += msg.displayTime;
-      });
-      if (this.radar.getMsgQueue()[amountMessages - 1].displayTime > 0) {
-        asyncDelay(timeOffset)
-          .then(() => {
-            this.ui.clearRadarMsg();
-            this.triggerGamePause(false);
-          })
-          .catch(() => {});
-      }
-    }
-  }
-
-  private endGame(): void {
-    this.triggerGamePause(true);
-    this.ended = true;
-    this.ui.displayGameEnd();
-  }
-
-  public getPaused(): boolean {
-    return this.paused;
-  }
-
-  public getEnded(): boolean {
-    return this.ended;
-  }
-
-  public getValidScreen(): boolean {
-    return this.validScreen;
-  }
-
-  public getMillisencondSinceLastPaint(): number {
-    return this.millisencondSinceLastPaint;
+  private requestAnimation() {
+    window.requestAnimationFrame(this.animate.bind(this));
   }
 }

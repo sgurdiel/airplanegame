@@ -1,25 +1,32 @@
 import { createDefaultPreset, type JestConfigWithTsJest } from 'ts-jest';
 
-
-
 const presetConfig = createDefaultPreset({
 });
 
 const jestConfig: JestConfigWithTsJest = {
   ...presetConfig,
   clearMocks: true,
-  collectCoverage: true,
+  collectCoverage: false,
   collectCoverageFrom: [
     'src/**'
   ],
-  coverageDirectory: "../dev-reports/devbox.d/web/coverage/airplanegame",
+  coverageDirectory: '../dev-reports/devbox.d/web/coverage/airplanegame',
   coveragePathIgnorePatterns: [
-    "/src/App\.ts",
+    '/node_modules/',
+    'Interface\\.ts'
   ],
-  coverageProvider: "v8",
+  coverageProvider: 'v8',
+  roots: [
+    'src/',
+    'test/'
+  ],
+  setupFilesAfterEnv: [
+    '<rootDir>/test/DomDocumentInit.ts'
+  ],
+  testEnvironment: 'jsdom',
   testMatch: [
-    "**/test/**/?(*.)+(spec|test).[tj]s?(x)"
-  ],
+    '**/test/**/?(*.)+(spec|test).[tj]s?(x)'
+  ]
 };
 
 export default jestConfig;
