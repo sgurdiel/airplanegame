@@ -1,8 +1,6 @@
 import { ScreenElementDimensionInterface } from '../../Domain/ScreenElementDimensionInterface';
 
-export class ScreenElementDimensionDom
-  implements ScreenElementDimensionInterface
-{
+export class ScreenElementDimensionDom implements ScreenElementDimensionInterface {
   constructor(
     private height: number,
     private width: number,

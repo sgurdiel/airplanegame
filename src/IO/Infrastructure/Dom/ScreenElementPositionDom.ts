@@ -1,8 +1,6 @@
 import { ScreenElementPositionInterface } from '../../Domain/ScreenElementPositionInterface';
 
-export class ScreenElementPositionDom
-  implements ScreenElementPositionInterface
-{
+export class ScreenElementPositionDom implements ScreenElementPositionInterface {
   constructor(
     private positionX: number = 0,
     private positionY: number = 0,
