@@ -27,7 +27,7 @@ var config = {
       title: 'Airplanegame',
       inject: 'body',
       scriptLoading: 'module',
-      APP_RELEASE: process.env.APP_RELEASE,
+      APP_VERSION: process.env.APP_VERSION,
       bodyContent: fs.readFileSync(path.resolve(__dirname, './templates/pages/game.html'), {encoding: 'utf8'}),
       minify: true,
     }),
@@ -37,7 +37,7 @@ var config = {
       title: 'Airplanegame',
       inject: 'body',
       scriptLoading: 'module',
-      APP_RELEASE: process.env.APP_RELEASE,
+      APP_VERSION: process.env.APP_VERSION,
       bodyContent: fs.readFileSync(path.resolve(__dirname, './templates/pages/error.html'), {encoding: 'utf8'}),
       minify: true,
     })
