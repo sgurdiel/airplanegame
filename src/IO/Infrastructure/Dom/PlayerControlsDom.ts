@@ -1,4 +1,4 @@
-import { PlayerDom } from '../../../Player/Infrastucture/Dom/PlayerDom';
+import { PlayerDom } from '../../../Player/Infrastructure/Dom/PlayerDom';
 import { PlayerControlsInterface } from '../../Domain/PlayerControlsInterface';
 import { DashboardDom } from './Dashboard/DashboardDom';
 import { Dom } from './Dom';

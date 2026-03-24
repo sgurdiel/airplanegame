@@ -1,5 +1,5 @@
-import { AirplaneAbstractDom } from '../../../../Player/Infrastucture/Dom/AirplaneAbstractDom';
-import { PlayerDom } from '../../../../Player/Infrastucture/Dom/PlayerDom';
+import { AirplaneAbstractDom } from '../../../../Player/Infrastructure/Dom/AirplaneAbstractDom';
+import { PlayerDom } from '../../../../Player/Infrastructure/Dom/PlayerDom';
 import { DashboardMagazineInterface } from '../../../Domain/Dashboard/DashboardMagazineInterface';
 import { Dom } from '../Dom';
 

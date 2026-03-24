@@ -1,5 +1,5 @@
 import { ScreenElementDom } from '../../IO/Infrastructure/Dom/ScreenElementDom';
-import { FireRoundDom } from '../Infrastucture/Dom/FireRoundDom';
+import { FireRoundDom } from '../Infrastructure/Dom/FireRoundDom';
 
 export interface AirplaneInterface {
   animate(

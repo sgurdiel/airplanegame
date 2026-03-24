@@ -1,5 +1,5 @@
 import { describe, expect, jest, beforeEach, test } from '@jest/globals';
-import { FireRoundDom } from '../../../../../src/Player/Infrastucture/Dom/FireRoundDom';
+import { FireRoundDom } from '../../../../../src/Player/Infrastructure/Dom/FireRoundDom';
 import { ScreenElementDom } from '../../../../../src/IO/Infrastructure/Dom/ScreenElementDom';
 import { ScreenElementPositionDom } from '../../../../../src/IO/Infrastructure/Dom/ScreenElementPositionDom';
 import { ScreenElementDimensionDom } from '../../../../../src/IO/Infrastructure/Dom/ScreenElementDimensionDom';

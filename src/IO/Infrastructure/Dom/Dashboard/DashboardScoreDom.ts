@@ -1,4 +1,4 @@
-import { PlayerDom } from '../../../../Player/Infrastucture/Dom/PlayerDom';
+import { PlayerDom } from '../../../../Player/Infrastructure/Dom/PlayerDom';
 import { DashboardScoreInterface } from '../../../Domain/Dashboard/DashboardScoreInterface';
 import { Dom } from '../Dom';
 

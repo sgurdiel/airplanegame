@@ -1,6 +1,6 @@
 import { describe, expect, beforeEach, afterEach, test } from '@jest/globals';
 import { DashboardScoreDom } from '../../../../../../src/IO/Infrastructure/Dom/Dashboard/DashboardScoreDom';
-import { PlayerDom } from '../../../../../../src/Player/Infrastucture/Dom/PlayerDom';
+import { PlayerDom } from '../../../../../../src/Player/Infrastructure/Dom/PlayerDom';
 import { Dom } from '../../../../../../src/IO/Infrastructure/Dom/Dom';
 import { resetDocument } from '../../../../../DomDocumentInit';
 

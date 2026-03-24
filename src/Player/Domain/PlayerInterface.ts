@@ -1,5 +1,5 @@
-import { AirplaneAbstractDom } from '../Infrastucture/Dom/AirplaneAbstractDom';
-import { BaseDom } from '../Infrastucture/Dom/BaseDom';
+import { AirplaneAbstractDom } from '../Infrastructure/Dom/AirplaneAbstractDom';
+import { BaseDom } from '../Infrastructure/Dom/BaseDom';
 
 export interface PlayerInterface {
   animate(

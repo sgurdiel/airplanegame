@@ -1,8 +1,8 @@
 import { EnemyDom } from '../../../Enemy/Infrastructure/Dom/EnemyDom';
 import { MissileAbstractDom } from '../../../Enemy/Infrastructure/Dom/MissileAbstractDom';
-import { AirplaneAbstractDom } from '../../../Player/Infrastucture/Dom/AirplaneAbstractDom';
-import { FireRoundDom } from '../../../Player/Infrastucture/Dom/FireRoundDom';
-import { PlayerDom } from '../../../Player/Infrastucture/Dom/PlayerDom';
+import { AirplaneAbstractDom } from '../../../Player/Infrastructure/Dom/AirplaneAbstractDom';
+import { FireRoundDom } from '../../../Player/Infrastructure/Dom/FireRoundDom';
+import { PlayerDom } from '../../../Player/Infrastructure/Dom/PlayerDom';
 import { HitInterface } from '../../Domain/HitInterface';
 
 export class HitDom implements HitInterface {

@@ -1,24 +1,24 @@
 import { describe, expect, jest, beforeEach, test } from '@jest/globals';
 import { HitDom } from '../../../../../src/Hit/Infrastructure/Dom/HitDom';
-import { PlayerDom } from '../../../../../src/Player/Infrastucture/Dom/PlayerDom';
+import { PlayerDom } from '../../../../../src/Player/Infrastructure/Dom/PlayerDom';
 import { EnemyDom } from '../../../../../src/Enemy/Infrastructure/Dom/EnemyDom';
 import { MissileAbstractDom } from '../../../../../src/Enemy/Infrastructure/Dom/MissileAbstractDom';
-import { AirplaneAbstractDom } from '../../../../../src/Player/Infrastucture/Dom/AirplaneAbstractDom';
-import { FireRoundDom } from '../../../../../src/Player/Infrastucture/Dom/FireRoundDom';
+import { AirplaneAbstractDom } from '../../../../../src/Player/Infrastructure/Dom/AirplaneAbstractDom';
+import { FireRoundDom } from '../../../../../src/Player/Infrastructure/Dom/FireRoundDom';
 import { ScreenElementDom } from '../../../../../src/IO/Infrastructure/Dom/ScreenElementDom';
 import { ScreenElementPositionDom } from '../../../../../src/IO/Infrastructure/Dom/ScreenElementPositionDom';
 import { ScreenElementDimensionDom } from '../../../../../src/IO/Infrastructure/Dom/ScreenElementDimensionDom';
-import { BaseDom } from '../../../../../src/Player/Infrastucture/Dom/BaseDom';
+import { BaseDom } from '../../../../../src/Player/Infrastructure/Dom/BaseDom';
 import { MissileHydrogenDom } from '../../../../../src/Enemy/Infrastructure/Dom/MissileHydrogenDom';
-import { AirplaneType1Dom } from '../../../../../src/Player/Infrastucture/Dom/AirplaneType1Dom';
+import { AirplaneType1Dom } from '../../../../../src/Player/Infrastructure/Dom/AirplaneType1Dom';
 
-jest.mock('../../../../../src/Player/Infrastucture/Dom/PlayerDom');
+jest.mock('../../../../../src/Player/Infrastructure/Dom/PlayerDom');
 jest.mock('../../../../../src/Enemy/Infrastructure/Dom/EnemyDom');
 jest.mock('../../../../../src/Enemy/Infrastructure/Dom/MissileAbstractDom');
-jest.mock('../../../../../src/Player/Infrastucture/Dom/AirplaneAbstractDom');
-jest.mock('../../../../../src/Player/Infrastucture/Dom/FireRoundDom');
+jest.mock('../../../../../src/Player/Infrastructure/Dom/AirplaneAbstractDom');
+jest.mock('../../../../../src/Player/Infrastructure/Dom/FireRoundDom');
 jest.mock('../../../../../src/IO/Infrastructure/Dom/ScreenElementDom');
-jest.mock('../../../../../src/Player/Infrastucture/Dom/BaseDom');
+jest.mock('../../../../../src/Player/Infrastructure/Dom/BaseDom');
 
 describe('HitDom', () => {
   let hitDom: HitDom;

@@ -1,13 +1,13 @@
 import { describe, expect, beforeEach, afterEach, test } from '@jest/globals';
 import { DashboardRadarDom } from '../../../../../../src/IO/Infrastructure/Dom/Dashboard/DashboardRadarDom';
-import { PlayerDom } from '../../../../../../src/Player/Infrastucture/Dom/PlayerDom';
+import { PlayerDom } from '../../../../../../src/Player/Infrastructure/Dom/PlayerDom';
 import { EnemyDom } from '../../../../../../src/Enemy/Infrastructure/Dom/EnemyDom';
 import { MissileAtomicDom } from '../../../../../../src/Enemy/Infrastructure/Dom/MissileAtomicDom';
 import { Dom } from '../../../../../../src/IO/Infrastructure/Dom/Dom';
 import { resetDocument } from '../../../../../DomDocumentInit';
-import { BaseDom } from '../../../../../../src/Player/Infrastucture/Dom/BaseDom';
+import { BaseDom } from '../../../../../../src/Player/Infrastructure/Dom/BaseDom';
 
-jest.mock('../../../../../../src/Player/Infrastucture/Dom/PlayerDom');
+jest.mock('../../../../../../src/Player/Infrastructure/Dom/PlayerDom');
 jest.mock('../../../../../../src/Enemy/Infrastructure/Dom/EnemyDom'); 
 
 describe('DashboardRadarDom', () => {

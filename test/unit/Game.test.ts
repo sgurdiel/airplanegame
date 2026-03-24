@@ -4,7 +4,7 @@ import { PlayerControlsDom } from '../../src/IO/Infrastructure/Dom/PlayerControl
 import { ScreenDom } from '../../src/IO/Infrastructure/Dom/ScreenDom';
 import { DashboardDom } from '../../src/IO/Infrastructure/Dom/Dashboard/DashboardDom';
 import { EnemyDom } from '../../src/Enemy/Infrastructure/Dom/EnemyDom';
-import { PlayerDom } from '../../src/Player/Infrastucture/Dom/PlayerDom';
+import { PlayerDom } from '../../src/Player/Infrastructure/Dom/PlayerDom';
 import { MenuDom } from '../../src/IO/Infrastructure/Dom/MenuDom';
 import { HitDom } from '../../src/Hit/Infrastructure/Dom/HitDom';
 
@@ -12,7 +12,7 @@ jest.mock('../../src/IO/Infrastructure/Dom/PlayerControlsDom');
 jest.mock('../../src/IO/Infrastructure/Dom/ScreenDom');
 jest.mock('../../src/IO/Infrastructure/Dom/Dashboard/DashboardDom');
 jest.mock('../../src/Enemy/Infrastructure/Dom/EnemyDom');
-jest.mock('../../src/Player/Infrastucture/Dom/PlayerDom');
+jest.mock('../../src/Player/Infrastructure/Dom/PlayerDom');
 jest.mock('../../src/IO/Infrastructure/Dom/MenuDom');
 jest.mock('../../src/Hit/Infrastructure/Dom/HitDom');
 

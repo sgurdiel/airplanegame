@@ -2,7 +2,7 @@ import { PlayerControlsDom } from './IO/Infrastructure/Dom/PlayerControlsDom';
 import { ScreenDom } from './IO/Infrastructure/Dom/ScreenDom';
 import { DashboardDom } from './IO/Infrastructure/Dom/Dashboard/DashboardDom';
 import { EnemyDom } from './Enemy/Infrastructure/Dom/EnemyDom';
-import { PlayerDom } from './Player/Infrastucture/Dom/PlayerDom';
+import { PlayerDom } from './Player/Infrastructure/Dom/PlayerDom';
 import { HitDom } from './Hit/Infrastructure/Dom/HitDom';
 import { MenuDom } from './IO/Infrastructure/Dom/MenuDom';
 

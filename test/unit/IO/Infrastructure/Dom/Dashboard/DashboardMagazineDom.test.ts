@@ -1,7 +1,7 @@
 import { describe, expect, beforeEach, afterEach, test } from '@jest/globals';
 import { DashboardMagazineDom } from '../../../../../../src/IO/Infrastructure/Dom/Dashboard/DashboardMagazineDom';
-import { AirplaneAbstractDom } from '../../../../../../src/Player/Infrastucture/Dom/AirplaneAbstractDom';
-import { PlayerDom } from '../../../../../../src/Player/Infrastucture/Dom/PlayerDom';
+import { AirplaneAbstractDom } from '../../../../../../src/Player/Infrastructure/Dom/AirplaneAbstractDom';
+import { PlayerDom } from '../../../../../../src/Player/Infrastructure/Dom/PlayerDom';
 import { Dom } from '../../../../../../src/IO/Infrastructure/Dom/Dom';
 
 describe('DashboardMagazineDom', () => {
