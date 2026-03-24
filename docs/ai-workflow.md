@@ -51,5 +51,4 @@ Human review should focus on:
 
 ## First Pilot Tasks
 Use one of these as an initial AI-assisted task:
-- add tests for uncovered behavior in `src/Game.ts`
 - add a small dashboard enhancement in `src/IO/Infrastructure/Dom/Dashboard/`
