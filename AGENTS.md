@@ -13,6 +13,7 @@ Install dependencies with `npm install`.
 - `npm run test:coverage` collects coverage for `src/**`, excluding `*Interface.ts`.
 - `npm run lint` checks `src/**` with ESLint.
 - `npm run format` rewrites `src/**/*.ts` with Prettier.
+- `npm run format:check` checks formatting for `src/**/*.ts` without rewriting files.
 
 ## Coding Style & Naming Conventions
 Use TypeScript with 2-space indentation, semicolons, trailing commas, single quotes, and an 80-character print width; these rules come from `.prettierrc.json`. Follow the existing naming pattern: interfaces end with `Interface`, DOM adapters end with `Dom`, and tests use the same basename as the source file. Keep domain contracts in `Domain/` and browser-specific behavior in `Infrastructure/Dom/`.
