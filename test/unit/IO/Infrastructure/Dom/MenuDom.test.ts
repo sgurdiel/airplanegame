@@ -24,34 +24,45 @@ describe('MenuDom', () => {
     });
 
     test('animate with gameInitiated closes the welcome menu (hides overlay)', () => {
-        // ensure welcome is open initially
         expect(overlay.style.visibility).toBe('visible');
 
         menu.animate(16, true, true, false, false);
         expect(overlay.style.visibility).toBe('hidden');
     });
 
-    test('pause is shown when animateScreen is false and resumes when animateScreen becomes true', () => {
-        // close welcome first to allow pause to trigger
+    test('pause menu shows updated controls table and close button', () => {
         menu.closeMenu();
-        expect(overlay.style.visibility).toBe('hidden');
 
-        // trigger pause
         menu.animate(16, false, false, false, false);
-        expect(container.innerHTML).toContain('PAUSED');
-        expect(overlay.style.visibility).toBe('visible');
 
-        // resume (animateScreen true) should close the pause menu
+        expect(container.innerHTML).toContain('Help Menu');
+        expect(container.innerHTML).toContain('<th>Controls</th>');
+        expect(container.innerHTML).toContain('<th>Description</th>');
+        expect(container.innerHTML).toContain('<td>Shift key or left mouse click</td>');
+        expect(container.innerHTML).toContain('<td>Fire missile</td>');
+        expect(container.innerHTML).toContain('<td>P key</td>');
+        expect(container.innerHTML).toContain('<td>Pause/unpause</td>');
+        expect(container.innerHTML).toContain('<td>Mouse move</td>');
+        expect(container.innerHTML).toContain('<td>Move airplane</td>');
+        expect(container.innerHTML).not.toContain('Arrow up key');
+        expect(container.innerHTML).not.toContain('Arrow down key');
+        expect(container.innerHTML).toContain('helpCloseButton');
+        expect(overlay.style.visibility).toBe('visible');
+    });
+
+    test('pause menu closes when animateScreen becomes true', () => {
+        menu.closeMenu();
+        menu.animate(16, false, false, false, false);
+
         menu.animate(16, false, true, false, false);
+
         expect(overlay.style.visibility).toBe('hidden');
     });
 
     test('game over menu is displayed after delay when defeated is true', () => {
-        // hide any existing menu
         menu.closeMenu();
         expect(overlay.style.visibility).toBe('hidden');
 
-        // call animate with defeated true three times using 1000ms to reach the 3000ms delay
         menu.animate(1000, false, true, false, true);
         expect(menu.gameOverDisplayed()).toBe(false);
         expect(overlay.style.visibility).toBe('hidden');
@@ -60,7 +71,6 @@ describe('MenuDom', () => {
         expect(menu.gameOverDisplayed()).toBe(false);
         expect(overlay.style.visibility).toBe('hidden');
 
-        // final call should reach the threshold and show the game over menu
         menu.animate(1000, false, true, false, true);
         expect(menu.gameOverDisplayed()).toBe(true);
         expect(container.innerHTML).toContain('GAME OVER');

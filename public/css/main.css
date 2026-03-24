@@ -71,7 +71,6 @@ div#menu div#menuRounds .magazine {
 }
 
 div#menu div#menuRadar {
-    margin-right: 20px;
     display: flex;
     flex-flow: row nowrap;
     justify-content: flex-end;
@@ -88,7 +87,7 @@ div#menu div#menuRadar div#radarMsg {
     flex-grow: 1;
     color: #bd1111;
     text-align: center;
-    font-size: 12px    
+    font-size: 12px;
 }
 
 div#menu div#menuRadar div#radarImg {
@@ -102,6 +101,26 @@ div#menu div#menuRadar div#radarImg {
     margin: 0;
     border: none;
     visibility: hidden;
+}
+
+div#menu div#menuHelp {
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+}
+
+div#menu div#menuHelp a#helpButton,
+div#infoOverlay div#infoContainer div.helpMenu a#helpCloseButton {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: 2px solid #12d912;
+    background-color: #12d912;
+    color: black;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 0.08em;
+    text-decoration: none;
 }
 
 div#body {
@@ -132,7 +151,7 @@ div#footer {
     padding: 4px 0;
     font-size: 0.8em;
     border-top: 4px solid #12d912;
-    background-color:black;
+    background-color: black;
 }
 
 div#footer div#version {
@@ -179,11 +198,38 @@ div#infoOverlay div#infoContainer p {
     text-align: center;
 }
 
+div#infoOverlay div#infoContainer div.helpMenu {
+    font-size: 1vmax;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(720px, 92%);
+    text-align: center;
+}
+
+div#infoOverlay div#infoContainer div.helpMenu h2 {
+    margin: 0 0 24px;
+}
+
+div#infoOverlay div#infoContainer div.helpMenu table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 24px;
+}
+
+div#infoOverlay div#infoContainer div.helpMenu th,
+div#infoOverlay div#infoContainer div.helpMenu td {
+    border: 2px solid #12d912;
+    padding: 10px 14px;
+    text-align: left;
+}
+
 .errorContainer {
     position: absolute;
     top: 40%;
     left: 50%;
-    transform: translate(-50%,-30%);
+    transform: translate(-50%, -30%);
     width: 100%;
     color: #12d912;
 }
@@ -211,7 +257,7 @@ div#infoOverlay div#infoContainer p {
 }
 
 @media screen and (max-width: 600px) {
-    #menuScore, #menuRounds , #menuRadar {
+    #menuScore, #menuRounds, #menuRadar, #menuHelp {
         visibility: hidden;
     }
 }

@@ -40,6 +40,17 @@ export class PlayerControlsDom implements PlayerControlsInterface {
       this.gameInitiated = true;
       return;
     }
+
+    if (this.dom.assertEventTarget(ev, 'helpButton')) {
+      this.userRequestedPause = true;
+      return;
+    }
+
+    if (this.dom.assertEventTarget(ev, 'helpCloseButton')) {
+      this.userRequestedPause = false;
+      return;
+    }
+
     this.fire();
   }
 
