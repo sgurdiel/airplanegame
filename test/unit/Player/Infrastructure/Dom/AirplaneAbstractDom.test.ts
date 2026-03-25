@@ -1,12 +1,12 @@
 import { describe, expect, jest, beforeEach, test } from '@jest/globals';
-import { AirplaneAbstractDom } from '../../../../../src/Player/Infrastucture/Dom/AirplaneAbstractDom';
+import { AirplaneAbstractDom } from '../../../../../src/Player/Infrastructure/Dom/AirplaneAbstractDom';
 import { ScreenElementDom } from '../../../../../src/IO/Infrastructure/Dom/ScreenElementDom';
-import { FireRoundDom } from '../../../../../src/Player/Infrastucture/Dom/FireRoundDom';
+import { FireRoundDom } from '../../../../../src/Player/Infrastructure/Dom/FireRoundDom';
 import { ScreenElementPositionDom } from '../../../../../src/IO/Infrastructure/Dom/ScreenElementPositionDom';
 import { ScreenElementDimensionDom } from '../../../../../src/IO/Infrastructure/Dom/ScreenElementDimensionDom';
 
 jest.mock('../../../../../src/IO/Infrastructure/Dom/ScreenElementDom');
-jest.mock('../../../../../src/Player/Infrastucture/Dom/FireRoundDom');
+jest.mock('../../../../../src/Player/Infrastructure/Dom/FireRoundDom');
 
 class ConcreteAirplane extends AirplaneAbstractDom {
   protected readonly magazineCapacity: number = 1;

@@ -1,5 +1,5 @@
 import { describe, expect, beforeEach, test } from '@jest/globals';
-import { BaseDom } from '../../../../../src/Player/Infrastucture/Dom/BaseDom';
+import { BaseDom } from '../../../../../src/Player/Infrastructure/Dom/BaseDom';
 
 describe('BaseDom', () => {
   let baseDom: BaseDom;

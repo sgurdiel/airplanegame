@@ -1,6 +1,6 @@
 import { EnemyDom } from '../../../Enemy/Infrastructure/Dom/EnemyDom';
 import { HitDom } from '../../../Hit/Infrastructure/Dom/HitDom';
-import { PlayerDom } from '../../../Player/Infrastucture/Dom/PlayerDom';
+import { PlayerDom } from '../../../Player/Infrastructure/Dom/PlayerDom';
 import { ScreenInterface } from '../../Domain/ScreenInterface';
 import { Dom } from './Dom';
 import { ScreenElementDom } from './ScreenElementDom';

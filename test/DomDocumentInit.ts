@@ -15,6 +15,10 @@ export function resetDocument(): void {
     score.id = 'score';
     document.body.appendChild(score);
 
+    const helpButton = document.createElement('a');
+    helpButton.id = 'helpButton';
+    document.body.appendChild(helpButton);
+
     const infoOverlay = document.createElement('div');
     infoOverlay.id = 'infoOverlay';
     document.body.appendChild(infoOverlay);

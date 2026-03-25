@@ -1,5 +1,5 @@
 import { EnemyDom } from '../../../../Enemy/Infrastructure/Dom/EnemyDom';
-import { PlayerDom } from '../../../../Player/Infrastucture/Dom/PlayerDom';
+import { PlayerDom } from '../../../../Player/Infrastructure/Dom/PlayerDom';
 import { DashboardInterface } from '../../../Domain/Dashboard/DashboardInterface';
 import { Dom } from '../Dom';
 import { DashboardMagazineDom } from './DashboardMagazineDom';

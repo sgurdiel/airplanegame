@@ -56,7 +56,20 @@ export class MenuDom implements MenuInterface {
 
   private pause(): void {
     this.menuPausedOpen = true;
-    this.loadMenu('<p>PAUSED</p>');
+    this.loadMenu(
+      '<div class="helpMenu">' +
+        '<h2>Help Menu</h2>' +
+        '<table>' +
+        '<thead><tr><th>Controls</th><th>Description</th></tr></thead>' +
+        '<tbody>' +
+        '<tr><td>Shift key or left mouse click</td><td>Fire missile</td></tr>' +
+        '<tr><td>P key</td><td>Pause/unpause</td></tr>' +
+        '<tr><td>Mouse move</td><td>Move airplane</td></tr>' +
+        '</tbody>' +
+        '</table>' +
+        '<a href="javascript:void();" id="helpCloseButton">CLOSE</a>' +
+        '</div>',
+    );
   }
 
   private gameOver(millisecondsSinceLastAnimateCall: number): void {

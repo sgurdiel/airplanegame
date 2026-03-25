@@ -1,7 +1,7 @@
 import { EnemyDom } from '../../../../Enemy/Infrastructure/Dom/EnemyDom';
 import { MissileAbstractDom } from '../../../../Enemy/Infrastructure/Dom/MissileAbstractDom';
 import { MissileAtomicDom } from '../../../../Enemy/Infrastructure/Dom/MissileAtomicDom';
-import { PlayerDom } from '../../../../Player/Infrastucture/Dom/PlayerDom';
+import { PlayerDom } from '../../../../Player/Infrastructure/Dom/PlayerDom';
 import { DashboardRadarInterface } from '../../../Domain/Dashboard/DashboardRadarInterface';
 import { Dom } from '../Dom';
 

@@ -1,11 +1,11 @@
 import { describe, expect, jest, beforeEach, test } from '@jest/globals';
-import { PlayerDom } from '../../../../../src/Player/Infrastucture/Dom/PlayerDom';
-import { AirplaneType1Dom } from '../../../../../src/Player/Infrastucture/Dom/AirplaneType1Dom';
-import { BaseDom } from '../../../../../src/Player/Infrastucture/Dom/BaseDom';
+import { PlayerDom } from '../../../../../src/Player/Infrastructure/Dom/PlayerDom';
+import { AirplaneType1Dom } from '../../../../../src/Player/Infrastructure/Dom/AirplaneType1Dom';
+import { BaseDom } from '../../../../../src/Player/Infrastructure/Dom/BaseDom';
 import { ScreenElementDom } from '../../../../../src/IO/Infrastructure/Dom/ScreenElementDom';
 
-jest.mock('../../../../../src/Player/Infrastucture/Dom/AirplaneType1Dom');
-jest.mock('../../../../../src/Player/Infrastucture/Dom/BaseDom');
+jest.mock('../../../../../src/Player/Infrastructure/Dom/AirplaneType1Dom');
+jest.mock('../../../../../src/Player/Infrastructure/Dom/BaseDom');
 
 describe('PlayerDom', () => {
   let playerDom: PlayerDom;

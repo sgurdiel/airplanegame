@@ -1,6 +1,6 @@
 import { describe, expect, jest, beforeEach, afterEach, test } from '@jest/globals';
 import { ScreenDom } from '../../../../../src/IO/Infrastructure/Dom/ScreenDom';
-import { PlayerDom } from '../../../../../src/Player/Infrastucture/Dom/PlayerDom';
+import { PlayerDom } from '../../../../../src/Player/Infrastructure/Dom/PlayerDom';
 import { EnemyDom } from '../../../../../src/Enemy/Infrastructure/Dom/EnemyDom';
 import { HitDom } from '../../../../../src/Hit/Infrastructure/Dom/HitDom';
 import { ScreenElementDom } from '../../../../../src/IO/Infrastructure/Dom/ScreenElementDom';
@@ -9,7 +9,7 @@ import { ScreenElementDimensionDom } from '../../../../../src/IO/Infrastructure/
 import { ScreenElementPositionDom } from '../../../../../src/IO/Infrastructure/Dom/ScreenElementPositionDom';
 import { resetDocument } from '../../../../DomDocumentInit';
 
-jest.mock('../../../../../src/Player/Infrastucture/Dom/PlayerDom');
+jest.mock('../../../../../src/Player/Infrastructure/Dom/PlayerDom');
 jest.mock('../../../../../src/Enemy/Infrastructure/Dom/EnemyDom'); 
 jest.mock('../../../../../src/Hit/Infrastructure/Dom/HitDom');
 jest.mock('../../../../../src/IO/Infrastructure/Dom/ScreenElementDom');

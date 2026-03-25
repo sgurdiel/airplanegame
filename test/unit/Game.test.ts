@@ -4,7 +4,7 @@ import { PlayerControlsDom } from '../../src/IO/Infrastructure/Dom/PlayerControl
 import { ScreenDom } from '../../src/IO/Infrastructure/Dom/ScreenDom';
 import { DashboardDom } from '../../src/IO/Infrastructure/Dom/Dashboard/DashboardDom';
 import { EnemyDom } from '../../src/Enemy/Infrastructure/Dom/EnemyDom';
-import { PlayerDom } from '../../src/Player/Infrastucture/Dom/PlayerDom';
+import { PlayerDom } from '../../src/Player/Infrastructure/Dom/PlayerDom';
 import { MenuDom } from '../../src/IO/Infrastructure/Dom/MenuDom';
 import { HitDom } from '../../src/Hit/Infrastructure/Dom/HitDom';
 
@@ -12,12 +12,13 @@ jest.mock('../../src/IO/Infrastructure/Dom/PlayerControlsDom');
 jest.mock('../../src/IO/Infrastructure/Dom/ScreenDom');
 jest.mock('../../src/IO/Infrastructure/Dom/Dashboard/DashboardDom');
 jest.mock('../../src/Enemy/Infrastructure/Dom/EnemyDom');
-jest.mock('../../src/Player/Infrastucture/Dom/PlayerDom');
+jest.mock('../../src/Player/Infrastructure/Dom/PlayerDom');
 jest.mock('../../src/IO/Infrastructure/Dom/MenuDom');
 jest.mock('../../src/Hit/Infrastructure/Dom/HitDom');
 
 describe('Game', () => {
   beforeEach(() => {
+    jest.clearAllMocks();
     window.requestAnimationFrame = jest.fn(() => 0);
     new Game();
   });
@@ -30,6 +31,19 @@ describe('Game', () => {
     expect(HitDom).toHaveBeenCalledTimes(1);
     expect(MenuDom).toHaveBeenCalledTimes(1);
     expect(PlayerControlsDom).toHaveBeenCalledTimes(1);
+  });
+
+  test('should wire shared dependencies into dashboard, hit, screen and controls', () => {
+    const player = (PlayerDom as jest.Mock).mock.instances[0];
+    const enemy = (EnemyDom as jest.Mock).mock.instances[0];
+    const dashboard = (DashboardDom as jest.Mock).mock.instances[0];
+    const screen = (ScreenDom as jest.Mock).mock.instances[0];
+    const hit = (HitDom as jest.Mock).mock.instances[0];
+
+    expect(DashboardDom).toHaveBeenCalledWith(player, enemy);
+    expect(HitDom).toHaveBeenCalledWith(player, enemy);
+    expect(ScreenDom).toHaveBeenCalledWith(player, enemy, hit);
+    expect(PlayerControlsDom).toHaveBeenCalledWith(screen, player, dashboard);
   });
 
   test('should call requestAnimationFrame on instantiation', () => {
@@ -52,7 +66,7 @@ describe('Game', () => {
     (PlayerControlsDom.prototype.animateScreen as jest.Mock).mockReturnValue(true);
     const animate = (window.requestAnimationFrame as jest.Mock).mock.calls[0][0] as (time: number) => void;
     animate(16);
-    // Only the initial requestAnimationFrame from constructor should have been called
+
     expect(window.requestAnimationFrame).toHaveBeenCalledTimes(1);
   });
 
@@ -63,7 +77,6 @@ describe('Game', () => {
     (PlayerDom.prototype.defeated as jest.Mock).mockReturnValue(false);
 
     const animate = (window.requestAnimationFrame as jest.Mock).mock.calls[0][0] as (time: number) => void;
-    // timestamp 100 => msSinceLast = 100, rate = 1000 / 100 = 10
     animate(100);
 
     expect(ScreenDom.prototype.animate).toHaveBeenCalledWith(10, 100);
@@ -71,14 +84,33 @@ describe('Game', () => {
     expect(MenuDom.prototype.animate).toHaveBeenCalledWith(100, true, true, false, false);
   });
 
-    test('should not call screen.animate when controls.animateScreen returns false but still call dashboard.animate', () => {
-      (PlayerControlsDom.prototype.animateScreen as jest.Mock).mockReturnValue(false);
+  test('should update timing from the previous animation frame timestamp', () => {
+    (PlayerControlsDom.prototype.animateScreen as jest.Mock).mockReturnValue(true);
 
-      const animate = (window.requestAnimationFrame as jest.Mock).mock.calls[0][0] as (time: number) => void;
-      animate(50);
+    const animate = (window.requestAnimationFrame as jest.Mock).mock.calls[0][0] as (time: number) => void;
+    animate(100);
+    animate(125);
 
-      expect(ScreenDom.prototype.animate).not.toHaveBeenCalled();
-      expect(DashboardDom.prototype.animate).toHaveBeenCalledWith(false, 50);
-      expect(MenuDom.prototype.animate).toHaveBeenCalledTimes(1);
-    });
+    expect(ScreenDom.prototype.animate).toHaveBeenNthCalledWith(1, 10, 100);
+    expect(ScreenDom.prototype.animate).toHaveBeenNthCalledWith(2, 40, 25);
+    expect(DashboardDom.prototype.animate).toHaveBeenNthCalledWith(2, true, 25);
+  });
+
+  test('should query control state for each animate branch', () => {
+    (PlayerControlsDom.prototype.animateScreen as jest.Mock).mockReturnValue(false);
+    (PlayerControlsDom.prototype.getGameInitiated as jest.Mock).mockReturnValue(true);
+    (DashboardDom.prototype.getPaused as jest.Mock).mockReturnValue(false);
+    (PlayerDom.prototype.defeated as jest.Mock).mockReturnValue(false);
+
+    const animate = (window.requestAnimationFrame as jest.Mock).mock.calls[0][0] as (time: number) => void;
+    animate(50);
+
+    expect(PlayerControlsDom.prototype.animateScreen).toHaveBeenCalledTimes(3);
+    expect(PlayerControlsDom.prototype.getGameInitiated).toHaveBeenCalledTimes(1);
+    expect(DashboardDom.prototype.getPaused).toHaveBeenCalledTimes(1);
+    expect(PlayerDom.prototype.defeated).toHaveBeenCalledTimes(1);
+    expect(ScreenDom.prototype.animate).not.toHaveBeenCalled();
+    expect(DashboardDom.prototype.animate).toHaveBeenCalledWith(false, 50);
+    expect(MenuDom.prototype.animate).toHaveBeenCalledWith(50, true, false, false, false);
+  });
 });
