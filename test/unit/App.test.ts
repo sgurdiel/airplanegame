@@ -1,28 +1,43 @@
-import { describe, expect, jest, test } from '@jest/globals';
-import Game from '../../src/Game';
-
-jest.mock('../../src/Game', () => {
-  return jest.fn().mockImplementation(() => {
-    return {};
-  });
-});
+import { beforeEach, describe, expect, jest, test } from '@jest/globals';
 
 describe('App', () => {
-  test('should create a new Game', () => {
-    require('../../src/App');
-    expect(Game).toHaveBeenCalledTimes(1);
+  beforeEach(() => {
+    jest.resetModules();
+    jest.clearAllMocks();
   });
 
-  test('should log errors thrown by Game', () => {
-    const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-    jest.resetModules();
-    jest.doMock('../../src/Game', () => {
-      return jest.fn().mockImplementation(() => {
-        throw new Error('error');
-      });
+  test('should create a new Game when the app boots', async () => {
+    const gameConstructor = jest.fn();
+
+    jest.doMock('../../src/Game', () => ({
+      __esModule: true,
+      default: gameConstructor,
+    }));
+
+    await jest.isolateModulesAsync(async () => {
+      await import('../../src/App');
     });
-    require('../../src/App');
-    expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
+
+    expect(gameConstructor).toHaveBeenCalledTimes(1);
+  });
+
+  test('should log errors thrown while creating the Game', async () => {
+    const error = new Error('error');
+    const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+
+    jest.doMock('../../src/Game', () => ({
+      __esModule: true,
+      default: jest.fn(() => {
+        throw error;
+      }),
+    }));
+
+    await jest.isolateModulesAsync(async () => {
+      await import('../../src/App');
+    });
+
+    expect(consoleErrorSpy).toHaveBeenCalledWith(error);
+
     consoleErrorSpy.mockRestore();
   });
 });

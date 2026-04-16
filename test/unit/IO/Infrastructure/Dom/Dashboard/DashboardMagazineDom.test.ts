@@ -1,4 +1,4 @@
-import { describe, expect, beforeEach, afterEach, test } from '@jest/globals';
+import { describe, expect, beforeEach, afterEach, test, jest } from '@jest/globals';
 import { DashboardMagazineDom } from '../../../../../../src/IO/Infrastructure/Dom/Dashboard/DashboardMagazineDom';
 import { AirplaneAbstractDom } from '../../../../../../src/Player/Infrastructure/Dom/AirplaneAbstractDom';
 import { PlayerDom } from '../../../../../../src/Player/Infrastructure/Dom/PlayerDom';
@@ -74,11 +74,13 @@ describe('DashboardMagazineDom', () => {
         setSpy.mockRestore();
     });
 
-    test('should not call magazineDisplay if animateScreen is false', () => {
+    test('should not update magazine displays if animateScreen is false', () => {
         const dashboard = new DashboardMagazineDom(player, dom);
-        const spy = jest.spyOn<any, any>(dashboard as any, 'magazineDisplay');
+
         dashboard.animate(false);
-        expect(spy).not.toHaveBeenCalled();
-        spy.mockRestore();
+
+        expect(magazinesContainer.children[0].innerHTML).toBe('');
+        expect(magazinesContainer.children[1].innerHTML).toBe('');
+        expect(magazinesContainer.children[2].innerHTML).toBe('');
     });
 });

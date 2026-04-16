@@ -1,4 +1,4 @@
-import { describe, expect, beforeEach, afterEach, test } from '@jest/globals';
+import { describe, expect, beforeEach, afterEach, test, jest } from '@jest/globals';
 import { PlayerControlsDom } from '../../../../../src/IO/Infrastructure/Dom/PlayerControlsDom';
 import { resetDocument } from '../../../../DomDocumentInit';
 

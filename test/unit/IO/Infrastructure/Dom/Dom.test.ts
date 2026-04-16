@@ -79,7 +79,7 @@ describe('Dom', () => {
     });
 
     describe('getImageById', () => {
-        it('should return the HTMLImageElement when an element with the correct ID and tag is found', () => {
+        test('should return the HTMLImageElement when an element with the correct ID and tag is found', () => {
             const image = document.createElement('img');
             image.id = 'test-image-id';
             document.body.appendChild(image);
@@ -91,7 +91,7 @@ describe('Dom', () => {
             document.body.removeChild(image);
         });
 
-        it('should throw an error if the element found is not an image tag', () => {
+        test('should throw an error if the element found is not an image tag', () => {
             const div = document.createElement('div');
             div.id = 'not-an-image';
             document.body.appendChild(div);
@@ -103,7 +103,7 @@ describe('Dom', () => {
             document.body.removeChild(div);
         });
 
-        it('should throw an error if no element is found with the given ID', () => {
+        test('should throw an error if no element is found with the given ID', () => {
             const image = document.createElement('img');
             image.id = 'test-image-id';
             document.body.appendChild(image);

@@ -1,4 +1,4 @@
-import { describe, expect, beforeEach, afterEach, test } from '@jest/globals';
+import { describe, expect, beforeEach, afterEach, test, jest } from '@jest/globals';
 import { DashboardScoreDom } from '../../../../../../src/IO/Infrastructure/Dom/Dashboard/DashboardScoreDom';
 import { PlayerDom } from '../../../../../../src/Player/Infrastructure/Dom/PlayerDom';
 import { Dom } from '../../../../../../src/IO/Infrastructure/Dom/Dom';
