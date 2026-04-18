@@ -23,4 +23,4 @@ ENV NODE_ENV=production
 COPY --chown=node:node --from=build /srv/app/public ./public
 
 ENTRYPOINT ["tini", "--"]
-CMD ["node", "dist/server.js"]
+CMD ["node", "dist/Server.js"]
