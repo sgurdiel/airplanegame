@@ -1,6 +1,6 @@
 {
   "name": "airplanegame_app",
-  "version": "3.0.10",
+  "version": "3.0.13",
   "description": "Airplane Game",
   "type": "module",
   "scripts": {
