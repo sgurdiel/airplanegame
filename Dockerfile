@@ -1,4 +1,4 @@
-ARG BASE_OCI_IMAGE=node:24.12.0-alpine
+ARG BASE_OCI_IMAGE=node:24.15.0-alpine
 
 FROM ${BASE_OCI_IMAGE} AS base
 WORKDIR /srv/app
