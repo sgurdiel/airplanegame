@@ -31,4 +31,4 @@ Use AI for bounded tasks such as unit tests, localized `Infrastructure/Dom/` cha
 Recent history favors short, imperative commit subjects such as `Revise README.md for clarity and completeness` and `Change env var name that hold app release`. Keep subjects concise and descriptive; group related code, test, and docs changes together. Pull requests should include a clear summary, test results (`npm test`, `npm run lint`), linked issues when applicable, and screenshots only when UI output or templates change.
 
 ## Configuration Tips
-Webpack reads `APP_VERSION` when generating `public/index.html` and `public/error.html`. Set that variable explicitly for release builds if version stamping matters.
+Webpack reads `RELEASE_APP` when generating `public/index.html` and `public/error.html`. Set that variable explicitly for release builds if version stamping matters.

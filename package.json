@@ -1,28 +1,35 @@
 {
   "name": "airplanegame_app",
-  "version": "3.0.13",
   "description": "Airplane Game",
   "type": "module",
   "scripts": {
-    "lint": "eslint src/**",
-    "format": "prettier --write \"src/**/*.ts\"",
-    "format:check": "prettier --check \"src/**/*.ts\"",
+    "lint": "eslint src/** server/**",
+    "format": "prettier --write \"{src,server}/**/*.ts\"",
+    "format:check": "prettier --check \"{src,server}/**/*.ts\"",
     "test": "jest --verbose",
     "test:watch": "jest --watchAll",
     "test:coverage": "jest --verbose --collectCoverage",
-    "dev:build": "webpack --config webpack.config.cjs --mode=development",
-    "dev:watch": "webpack --config webpack.config.cjs --mode=development --watch",
-    "pro:build": "webpack --config webpack.config.cjs --mode=production"
+    "game:devbuild": "webpack --config webpack.config.cjs --mode=development",
+    "game:devwatch": "webpack --config webpack.config.cjs --mode=development --watch",
+    "game:probuild": "webpack --config webpack.config.cjs --mode=production",
+    "server:build": "rm -rf dist && tsc -p tsconfig.server.json && node -e \"require('node:fs').writeFileSync('dist/package.json', '{\\n  \\\"type\\\": \\\"commonjs\\\"\\n}\\n')\"",
+    "server:start": "node dist/Server.js",
+    "server:watch": "tsc -p tsconfig.server.json -w & nodemon -q -w dist dist/Server.js",
+    "build": "npm run game:probuild && npm run server:build",
+    "start": "npm run server:start"
   },
   "license": "ISC",
   "devDependencies": {
     "@eslint/js": "^10.0.0",
     "@jest/globals": "^30.2.0",
+    "@types/express": "^5.0.3",
     "@types/jest": "^30.0.0",
+    "@types/node": "^24.10.0",
     "eslint": "^10.0.0",
     "html-webpack-plugin": "^5.5.0",
     "jest": "^30.2.0",
     "jest-environment-jsdom": "^30.2.0",
+    "nodemon": "^3.1.10",
     "prettier": "^3.6.2",
     "ts-jest": "^29.4.5",
     "ts-loader": "^9.5.4",
@@ -30,5 +37,13 @@
     "typescript-eslint": "^8.46.0",
     "webpack": "^5.74.0",
     "webpack-cli": "^7.0.0"
+  },
+  "dependencies": {
+    "@opentelemetry/api": "^1.9.0",
+    "@opentelemetry/exporter-trace-otlp-proto": "^0.218.0",
+    "@opentelemetry/resources": "^2.7.0",
+    "@opentelemetry/sdk-node": "^0.218.0",
+    "@opentelemetry/semantic-conventions": "^1.37.0",
+    "express": "^5.1.0"
   }
 }
