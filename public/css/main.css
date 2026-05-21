@@ -152,11 +152,6 @@ div#footer {
     font-size: 0.8em;
     border-top: 4px solid #12d912;
     background-color: black;
-}
-
-div#footer div#version {
-    font-size: 0.8em;
-    text-align: center;
     color: white;
 }
 

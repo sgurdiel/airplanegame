@@ -1,0 +1,8 @@
+[env]
+_.file = [
+    ".env.local",
+    "versions.env"
+]
+
+[tools]
+node = "{{env.RELEASE_NODE}}"

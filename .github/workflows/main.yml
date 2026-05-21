@@ -19,23 +19,23 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v6
 
-    - name: Setup devbox
-      uses: jetify-com/devbox-install-action@v0.15.0
+    - name: Setup mise
+      uses: jdx/mise-action@v4
       with:
-        # Caching the entire Nix store in github based on your devbox.json
-        enable-cache: true
+        install: true
+        cache: true
 
     - name: Install npm packages
-      run: devbox run npm install
+      run: npm ci
 
     - name: Run lint
-      run: devbox run npm run lint
+      run: npm run lint
 
     - name: Run formatter
-      run: devbox run npm run format:check
+      run: npm run format:check
 
     - name: Run tests
-      run: devbox run npm run test:coverage
+      run: npm run test:coverage
 
     - name: Run build
-      run: devbox run npm run pro:build
+      run: npm run build
