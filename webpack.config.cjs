@@ -2,6 +2,8 @@ const path = require('path');
 const fs = require('node:fs');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+const releaseApp = process.env.RELEASE_APP ?? 'DEV';
+
 var config = {
   entry: './src/App.ts',
   module: {
@@ -27,7 +29,7 @@ var config = {
       title: 'Airplanegame',
       inject: 'body',
       scriptLoading: 'module',
-      APP_VERSION: process.env.APP_VERSION,
+      RELEASE_APP: releaseApp,
       bodyContent: fs.readFileSync(path.resolve(__dirname, './templates/pages/game.html'), {encoding: 'utf8'}),
       minify: true,
     }),
@@ -37,7 +39,7 @@ var config = {
       title: 'Airplanegame',
       inject: 'body',
       scriptLoading: 'module',
-      APP_VERSION: process.env.APP_VERSION,
+      RELEASE_APP: releaseApp,
       bodyContent: fs.readFileSync(path.resolve(__dirname, './templates/pages/error.html'), {encoding: 'utf8'}),
       minify: true,
     })

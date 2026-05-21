@@ -1,6 +1,6 @@
 # Airplane Game
 
-A classic web-based airplane game originally developed in JavaScript during the early 2000s, now modernized with TypeScript, Webpack, and Jest. This project demonstrates contemporary web development practices using Domain-Driven Design (DDD) and Hexagonal Architecture patterns.
+A classic web-based airplane game originally developed in JavaScript during the early 2000s, now modernized with TypeScript, Webpack, Jest, and an integrated Express server. This project demonstrates contemporary web development practices using Domain-Driven Design (DDD) and Hexagonal Architecture patterns.
 
 ## Table of Contents
 
@@ -34,7 +34,11 @@ A classic web-based airplane game originally developed in JavaScript during the 
    npm run dev:watch
    ```
 
-4. Open `public/index.html` in your web browser
+4. Build the browser assets and start the server:
+   ```bash
+   npm run build
+   npm start
+   ```
 
 ## Folder Structure
 
@@ -55,6 +59,8 @@ airplanegame/
 │   └── IO/                # Input/Output and UI domain
 │   │   ├── Domain/        # Core interfaces
 │   │   └── Infrastructure/# Concrete implementations
+├── server/                # Express server and observability setup
+│   └── Observability/     # Telemetry bootstrap
 ├── test/                  # Test suite
 │   └── unit/              # Unit tests mirroring src/ structure
 ├── public/                # Build output and static assets
@@ -63,6 +69,7 @@ airplanegame/
 │   └── js/                # Generated JavaScript bundles
 ├── templates/             # HTML templates
 ├── webpack.config.cjs     # Webpack configuration
+├── tsconfig.server.json   # Server TypeScript build configuration
 ├── jest.config.ts         # Jest testing configuration
 └── package.json           # Project dependencies
 ```
@@ -104,6 +111,11 @@ This separation enables independent evolution of business logic and presentation
 | `npm run dev:watch` | Watch and rebuild on code changes (development mode) |
 | `npm run dev:build` | Single development build with source maps |
 | `npm run pro:build` | Optimized production build |
+| `npm run server:build` | Compile the Express server to `dist/` |
+| `npm run server:start` | Start the compiled Express server |
+| `npm run server:watch` | Rebuild and restart the server on changes |
+| `npm run build` | Build both the browser bundle and server |
+| `npm start` | Start the compiled server |
 
 ### Code Quality
 
@@ -136,6 +148,11 @@ This separation enables independent evolution of business logic and presentation
    ```
 
 3. The bundled files will be output to the `public/` directory
+4. Compile and run the integrated server:
+   ```bash
+   npm run build
+   npm start
+   ```
 
 ### Code Style
 
@@ -178,17 +195,31 @@ npm run dev:build
 
 ### Production Build
 
-Optimized and minified bundle:
+Optimized and minified browser bundle:
 ```bash
 npm run pro:build
 ```
 
-Output files are generated in the `public/` directory and ready for deployment.
+Full application build:
+```bash
+npm run build
+```
+
+Output files are generated in `public/` and `dist/` and are ready for deployment.
+
+## Server Configuration
+
+- `RELEASE_APP` defaults to `DEV` when not set.
+- `OTEL_REQUEST_TRACE_RATIO` controls root request tracing from `0` to `1`.
+- `OTEL_REQUEST_TRACE_RATIO=1` traces all requests.
+- `OTEL_REQUEST_TRACE_RATIO=0.25` traces about 25% of requests.
+- Invalid or missing `OTEL_REQUEST_TRACE_RATIO` values default to `1`.
 
 ## Technology Stack
 
 - **TypeScript** - Static typing and enhanced IDE support
 - **Webpack** - Module bundler and build system
+- **Express** - HTTP server for serving the game and health endpoints
 - **Jest** - Unit testing framework
 - **ESLint** - Code linting
 - **Prettier** - Code formatting
