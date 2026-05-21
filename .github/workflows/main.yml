@@ -39,3 +39,10 @@ jobs:
 
     - name: Run build
       run: npm run build
+
+    - name: Build Docker image
+      run: |
+        set -a
+        . ./versions.env
+        set +a
+        docker build --build-arg RELEASE_NODE .
