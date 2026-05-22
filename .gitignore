@@ -5,6 +5,3 @@ public/*.html
 .scannerwork/
 .env
 .vscode/
-GEMINI.md
-CLAUDE.md
-sonar-project.properties

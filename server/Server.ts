@@ -15,7 +15,7 @@ import path from 'node:path';
 sdk.start();
 
 const tracer = trace.getTracer(
-  process.env.OTEL_SERVICE_NAME ?? 'xver/airplanegame',
+  process.env.OTEL_SERVICE_NAME ?? 'xver-airplanegame-dev',
   process.env.RELEASE_APP ?? 'DEV',
 );
 const port = Number.parseInt(process.env.NODE_PORT ?? '3000', 10);
