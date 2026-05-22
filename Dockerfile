@@ -17,7 +17,7 @@ COPY templates ./templates
 COPY public ./public
 ARG RELEASE_APP=0
 ENV RELEASE_APP=$RELEASE_APP
-RUN npm run pro:build && npm run server:build
+RUN npm run build
 
 FROM base AS prod-deps
 COPY package*.json ./
