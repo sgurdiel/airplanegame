@@ -31,6 +31,8 @@ let isReady = true;
 let isShuttingDown = false;
 let shutdownTimer: NodeJS.Timeout | undefined;
 
+app.disable('x-powered-by');
+
 app.set('trust proxy', true);
 
 app.use(trackInflightRequests);
